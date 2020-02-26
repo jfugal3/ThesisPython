@@ -1,0 +1,791 @@
+Logging to training_logs/ACKTR7_1goal_ee_PD_cont_0.1
+---------------------------------
+| explained_variance | -0.047   |
+| fps                | 9        |
+| nupdates           | 1        |
+| policy_entropy     | 4.26     |
+| policy_loss        | -0.119   |
+| total_timesteps    | 0        |
+| value_loss         | 4.43     |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 1.52e+03 |
+| explained_variance | 0.772    |
+| fps                | 225      |
+| nupdates           | 100      |
+| policy_entropy     | 4.35     |
+| policy_loss        | 0.159    |
+| total_timesteps    | 13959    |
+| value_loss         | 0.203    |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 2.34e+03 |
+| explained_variance | 0.91     |
+| fps                | 212      |
+| nupdates           | 200      |
+| policy_entropy     | 4.38     |
+| policy_loss        | -0.0573  |
+| total_timesteps    | 28059    |
+| value_loss         | 0.065    |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 3.19e+03 |
+| explained_variance | 0.965    |
+| fps                | 213      |
+| nupdates           | 300      |
+| policy_entropy     | 4.4      |
+| policy_loss        | -0.146   |
+| total_timesteps    | 42159    |
+| value_loss         | 0.0427   |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 3.2e+03  |
+| explained_variance | 0.941    |
+| fps                | 213      |
+| nupdates           | 400      |
+| policy_entropy     | 4.39     |
+| policy_loss        | -0.0163  |
+| total_timesteps    | 56259    |
+| value_loss         | 0.0718   |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 3.27e+03 |
+| explained_variance | 0.915    |
+| fps                | 214      |
+| nupdates           | 500      |
+| policy_entropy     | 4.38     |
+| policy_loss        | -0.189   |
+| total_timesteps    | 70359    |
+| value_loss         | 0.0314   |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 3.86e+03 |
+| explained_variance | 0.543    |
+| fps                | 215      |
+| nupdates           | 600      |
+| policy_entropy     | 4.36     |
+| policy_loss        | 0.039    |
+| total_timesteps    | 84459    |
+| value_loss         | 0.0166   |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 4.6e+03  |
+| explained_variance | 0.974    |
+| fps                | 215      |
+| nupdates           | 700      |
+| policy_entropy     | 4.35     |
+| policy_loss        | -0.223   |
+| total_timesteps    | 98559    |
+| value_loss         | 0.0338   |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 5.38e+03 |
+| explained_variance | 0.666    |
+| fps                | 215      |
+| nupdates           | 800      |
+| policy_entropy     | 4.33     |
+| policy_loss        | -0.128   |
+| total_timesteps    | 112659   |
+| value_loss         | 0.132    |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 6.96e+03 |
+| explained_variance | 0.95     |
+| fps                | 215      |
+| nupdates           | 900      |
+| policy_entropy     | 4.29     |
+| policy_loss        | -0.0797  |
+| total_timesteps    | 126759   |
+| value_loss         | 0.0117   |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 8.38e+03 |
+| explained_variance | 0.935    |
+| fps                | 216      |
+| nupdates           | 1000     |
+| policy_entropy     | 4.26     |
+| policy_loss        | -0.255   |
+| total_timesteps    | 140859   |
+| value_loss         | 0.0344   |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 1e+04    |
+| explained_variance | 0.947    |
+| fps                | 216      |
+| nupdates           | 1100     |
+| policy_entropy     | 4.24     |
+| policy_loss        | -0.153   |
+| total_timesteps    | 154959   |
+| value_loss         | 0.0366   |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 1.26e+04 |
+| explained_variance | 0.951    |
+| fps                | 216      |
+| nupdates           | 1200     |
+| policy_entropy     | 4.18     |
+| policy_loss        | 0.00674  |
+| total_timesteps    | 169059   |
+| value_loss         | 0.073    |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 1.45e+04 |
+| explained_variance | 0.934    |
+| fps                | 216      |
+| nupdates           | 1300     |
+| policy_entropy     | 4.15     |
+| policy_loss        | -0.127   |
+| total_timesteps    | 183159   |
+| value_loss         | 0.108    |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 1.67e+04 |
+| explained_variance | 0.989    |
+| fps                | 216      |
+| nupdates           | 1400     |
+| policy_entropy     | 4.13     |
+| policy_loss        | -0.0189  |
+| total_timesteps    | 197259   |
+| value_loss         | 0.0172   |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 1.87e+04 |
+| explained_variance | 0.996    |
+| fps                | 216      |
+| nupdates           | 1500     |
+| policy_entropy     | 4.08     |
+| policy_loss        | -0.233   |
+| total_timesteps    | 211359   |
+| value_loss         | 0.00574  |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 1.99e+04 |
+| explained_variance | 0.984    |
+| fps                | 216      |
+| nupdates           | 1600     |
+| policy_entropy     | 4.04     |
+| policy_loss        | -0.114   |
+| total_timesteps    | 225459   |
+| value_loss         | 0.0192   |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 2.23e+04 |
+| explained_variance | 0.994    |
+| fps                | 216      |
+| nupdates           | 1700     |
+| policy_entropy     | 4.02     |
+| policy_loss        | -0.137   |
+| total_timesteps    | 239559   |
+| value_loss         | 0.0105   |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 2.44e+04 |
+| explained_variance | 0.991    |
+| fps                | 216      |
+| nupdates           | 1800     |
+| policy_entropy     | 4        |
+| policy_loss        | -0.00379 |
+| total_timesteps    | 253659   |
+| value_loss         | 0.00666  |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 2.46e+04 |
+| explained_variance | 0.99     |
+| fps                | 216      |
+| nupdates           | 1900     |
+| policy_entropy     | 3.98     |
+| policy_loss        | -0.119   |
+| total_timesteps    | 267759   |
+| value_loss         | 0.0157   |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 2.58e+04 |
+| explained_variance | 0.994    |
+| fps                | 216      |
+| nupdates           | 2000     |
+| policy_entropy     | 3.95     |
+| policy_loss        | -0.0161  |
+| total_timesteps    | 281859   |
+| value_loss         | 0.00796  |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 2.75e+04 |
+| explained_variance | 0.994    |
+| fps                | 216      |
+| nupdates           | 2100     |
+| policy_entropy     | 3.92     |
+| policy_loss        | -0.0358  |
+| total_timesteps    | 295959   |
+| value_loss         | 0.0087   |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 2.88e+04 |
+| explained_variance | 0.992    |
+| fps                | 216      |
+| nupdates           | 2200     |
+| policy_entropy     | 3.9      |
+| policy_loss        | -0.0368  |
+| total_timesteps    | 310059   |
+| value_loss         | 0.0149   |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 2.91e+04 |
+| explained_variance | 0.989    |
+| fps                | 217      |
+| nupdates           | 2300     |
+| policy_entropy     | 3.88     |
+| policy_loss        | -0.0254  |
+| total_timesteps    | 324159   |
+| value_loss         | 0.0153   |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 2.91e+04 |
+| explained_variance | 0.993    |
+| fps                | 217      |
+| nupdates           | 2400     |
+| policy_entropy     | 3.87     |
+| policy_loss        | 0.0315   |
+| total_timesteps    | 338259   |
+| value_loss         | 0.0113   |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 2.91e+04 |
+| explained_variance | 0.996    |
+| fps                | 217      |
+| nupdates           | 2500     |
+| policy_entropy     | 3.85     |
+| policy_loss        | -0.139   |
+| total_timesteps    | 352359   |
+| value_loss         | 0.00502  |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 2.97e+04 |
+| explained_variance | 0.99     |
+| fps                | 217      |
+| nupdates           | 2600     |
+| policy_entropy     | 3.82     |
+| policy_loss        | -0.15    |
+| total_timesteps    | 366459   |
+| value_loss         | 0.0146   |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 3.03e+04 |
+| explained_variance | 0.994    |
+| fps                | 217      |
+| nupdates           | 2700     |
+| policy_entropy     | 3.8      |
+| policy_loss        | 0.0608   |
+| total_timesteps    | 380559   |
+| value_loss         | 0.00921  |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 3.05e+04 |
+| explained_variance | 0.995    |
+| fps                | 217      |
+| nupdates           | 2800     |
+| policy_entropy     | 3.78     |
+| policy_loss        | -0.0249  |
+| total_timesteps    | 394659   |
+| value_loss         | 0.00636  |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 3.08e+04 |
+| explained_variance | 0.998    |
+| fps                | 217      |
+| nupdates           | 2900     |
+| policy_entropy     | 3.74     |
+| policy_loss        | -0.225   |
+| total_timesteps    | 408759   |
+| value_loss         | 0.00271  |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 3.29e+04 |
+| explained_variance | 0.994    |
+| fps                | 217      |
+| nupdates           | 3000     |
+| policy_entropy     | 3.7      |
+| policy_loss        | -0.145   |
+| total_timesteps    | 422859   |
+| value_loss         | 0.0083   |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 3.31e+04 |
+| explained_variance | 0.992    |
+| fps                | 217      |
+| nupdates           | 3100     |
+| policy_entropy     | 3.68     |
+| policy_loss        | -0.0267  |
+| total_timesteps    | 436959   |
+| value_loss         | 0.0134   |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 3.39e+04 |
+| explained_variance | 0.996    |
+| fps                | 217      |
+| nupdates           | 3200     |
+| policy_entropy     | 3.64     |
+| policy_loss        | -0.186   |
+| total_timesteps    | 451059   |
+| value_loss         | 0.00699  |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 3.48e+04 |
+| explained_variance | 0.991    |
+| fps                | 217      |
+| nupdates           | 3300     |
+| policy_entropy     | 3.63     |
+| policy_loss        | -0.136   |
+| total_timesteps    | 465159   |
+| value_loss         | 0.0191   |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 3.57e+04 |
+| explained_variance | 0.989    |
+| fps                | 217      |
+| nupdates           | 3400     |
+| policy_entropy     | 3.61     |
+| policy_loss        | 0.0121   |
+| total_timesteps    | 479259   |
+| value_loss         | 0.0165   |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 3.42e+04 |
+| explained_variance | 0.994    |
+| fps                | 217      |
+| nupdates           | 3500     |
+| policy_entropy     | 3.61     |
+| policy_loss        | 0.0362   |
+| total_timesteps    | 493359   |
+| value_loss         | 0.0043   |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 3.18e+04 |
+| explained_variance | 0.991    |
+| fps                | 217      |
+| nupdates           | 3600     |
+| policy_entropy     | 3.58     |
+| policy_loss        | -0.154   |
+| total_timesteps    | 507459   |
+| value_loss         | 0.0117   |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 3.12e+04 |
+| explained_variance | 0.986    |
+| fps                | 217      |
+| nupdates           | 3700     |
+| policy_entropy     | 3.58     |
+| policy_loss        | -0.0773  |
+| total_timesteps    | 521559   |
+| value_loss         | 0.02     |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 3e+04    |
+| explained_variance | 0.983    |
+| fps                | 217      |
+| nupdates           | 3800     |
+| policy_entropy     | 3.58     |
+| policy_loss        | 0.291    |
+| total_timesteps    | 535659   |
+| value_loss         | 0.0276   |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 3.01e+04 |
+| explained_variance | 0.988    |
+| fps                | 217      |
+| nupdates           | 3900     |
+| policy_entropy     | 3.56     |
+| policy_loss        | -0.177   |
+| total_timesteps    | 549759   |
+| value_loss         | 0.0156   |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 3.05e+04 |
+| explained_variance | 0.996    |
+| fps                | 217      |
+| nupdates           | 4000     |
+| policy_entropy     | 3.55     |
+| policy_loss        | -0.101   |
+| total_timesteps    | 563859   |
+| value_loss         | 0.00506  |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 3.01e+04 |
+| explained_variance | 0.987    |
+| fps                | 217      |
+| nupdates           | 4100     |
+| policy_entropy     | 3.54     |
+| policy_loss        | -0.183   |
+| total_timesteps    | 577959   |
+| value_loss         | 0.0162   |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 3.08e+04 |
+| explained_variance | 0.992    |
+| fps                | 217      |
+| nupdates           | 4200     |
+| policy_entropy     | 3.51     |
+| policy_loss        | -0.131   |
+| total_timesteps    | 592059   |
+| value_loss         | 0.0113   |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 3.51e+04 |
+| explained_variance | 0.991    |
+| fps                | 217      |
+| nupdates           | 4300     |
+| policy_entropy     | 3.47     |
+| policy_loss        | -0.0643  |
+| total_timesteps    | 606159   |
+| value_loss         | 0.0157   |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 3.51e+04 |
+| explained_variance | 0.986    |
+| fps                | 217      |
+| nupdates           | 4400     |
+| policy_entropy     | 3.46     |
+| policy_loss        | -0.0569  |
+| total_timesteps    | 620259   |
+| value_loss         | 0.0199   |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 3.76e+04 |
+| explained_variance | 0.997    |
+| fps                | 217      |
+| nupdates           | 4500     |
+| policy_entropy     | 3.44     |
+| policy_loss        | -0.0184  |
+| total_timesteps    | 634359   |
+| value_loss         | 0.00512  |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 3.68e+04 |
+| explained_variance | 0.997    |
+| fps                | 217      |
+| nupdates           | 4600     |
+| policy_entropy     | 3.43     |
+| policy_loss        | -0.191   |
+| total_timesteps    | 648459   |
+| value_loss         | 0.00322  |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 3.6e+04  |
+| explained_variance | 0.997    |
+| fps                | 218      |
+| nupdates           | 4700     |
+| policy_entropy     | 3.41     |
+| policy_loss        | -0.0937  |
+| total_timesteps    | 662559   |
+| value_loss         | 0.00465  |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 3.72e+04 |
+| explained_variance | 0.988    |
+| fps                | 218      |
+| nupdates           | 4800     |
+| policy_entropy     | 3.4      |
+| policy_loss        | -0.0298  |
+| total_timesteps    | 676659   |
+| value_loss         | 0.0157   |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 3.57e+04 |
+| explained_variance | 0.99     |
+| fps                | 218      |
+| nupdates           | 4900     |
+| policy_entropy     | 3.38     |
+| policy_loss        | 0.0242   |
+| total_timesteps    | 690759   |
+| value_loss         | 0.0145   |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 3.51e+04 |
+| explained_variance | 0.99     |
+| fps                | 218      |
+| nupdates           | 5000     |
+| policy_entropy     | 3.38     |
+| policy_loss        | -0.00875 |
+| total_timesteps    | 704859   |
+| value_loss         | 0.0147   |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 3.35e+04 |
+| explained_variance | 0.995    |
+| fps                | 218      |
+| nupdates           | 5100     |
+| policy_entropy     | 3.36     |
+| policy_loss        | -0.0245  |
+| total_timesteps    | 718959   |
+| value_loss         | 0.00822  |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 3.25e+04 |
+| explained_variance | 0.997    |
+| fps                | 218      |
+| nupdates           | 5200     |
+| policy_entropy     | 3.33     |
+| policy_loss        | -0.026   |
+| total_timesteps    | 733059   |
+| value_loss         | 0.00373  |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 3.38e+04 |
+| explained_variance | 0.998    |
+| fps                | 218      |
+| nupdates           | 5300     |
+| policy_entropy     | 3.29     |
+| policy_loss        | 0.0842   |
+| total_timesteps    | 747159   |
+| value_loss         | 0.00242  |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 3.49e+04 |
+| explained_variance | 0.992    |
+| fps                | 218      |
+| nupdates           | 5400     |
+| policy_entropy     | 3.27     |
+| policy_loss        | -0.15    |
+| total_timesteps    | 761259   |
+| value_loss         | 0.0118   |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 3.67e+04 |
+| explained_variance | 0.996    |
+| fps                | 218      |
+| nupdates           | 5500     |
+| policy_entropy     | 3.25     |
+| policy_loss        | 0.0671   |
+| total_timesteps    | 775359   |
+| value_loss         | 0.00332  |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 3.5e+04  |
+| explained_variance | 0.997    |
+| fps                | 218      |
+| nupdates           | 5600     |
+| policy_entropy     | 3.23     |
+| policy_loss        | -0.0303  |
+| total_timesteps    | 789459   |
+| value_loss         | 0.00372  |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 3.59e+04 |
+| explained_variance | 0.992    |
+| fps                | 218      |
+| nupdates           | 5700     |
+| policy_entropy     | 3.19     |
+| policy_loss        | -0.0133  |
+| total_timesteps    | 803559   |
+| value_loss         | 0.0145   |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 3.81e+04 |
+| explained_variance | 0.997    |
+| fps                | 218      |
+| nupdates           | 5800     |
+| policy_entropy     | 3.17     |
+| policy_loss        | -0.147   |
+| total_timesteps    | 817659   |
+| value_loss         | 0.00488  |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 3.8e+04  |
+| explained_variance | 0.998    |
+| fps                | 218      |
+| nupdates           | 5900     |
+| policy_entropy     | 3.15     |
+| policy_loss        | -0.00216 |
+| total_timesteps    | 831759   |
+| value_loss         | 0.00246  |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 3.82e+04 |
+| explained_variance | 0.975    |
+| fps                | 218      |
+| nupdates           | 6000     |
+| policy_entropy     | 3.13     |
+| policy_loss        | -0.155   |
+| total_timesteps    | 845859   |
+| value_loss         | 0.0205   |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 3.86e+04 |
+| explained_variance | 0.989    |
+| fps                | 218      |
+| nupdates           | 6100     |
+| policy_entropy     | 3.1      |
+| policy_loss        | -0.201   |
+| total_timesteps    | 859959   |
+| value_loss         | 0.0138   |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 3.87e+04 |
+| explained_variance | 0.995    |
+| fps                | 218      |
+| nupdates           | 6200     |
+| policy_entropy     | 3.05     |
+| policy_loss        | -0.0165  |
+| total_timesteps    | 874059   |
+| value_loss         | 0.00707  |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 3.9e+04  |
+| explained_variance | 0.997    |
+| fps                | 218      |
+| nupdates           | 6300     |
+| policy_entropy     | 3.02     |
+| policy_loss        | -0.15    |
+| total_timesteps    | 888159   |
+| value_loss         | 0.00615  |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 3.91e+04 |
+| explained_variance | 0.998    |
+| fps                | 218      |
+| nupdates           | 6400     |
+| policy_entropy     | 3.01     |
+| policy_loss        | -0.0109  |
+| total_timesteps    | 902259   |
+| value_loss         | 0.00302  |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 3.8e+04  |
+| explained_variance | 0.999    |
+| fps                | 218      |
+| nupdates           | 6500     |
+| policy_entropy     | 3.01     |
+| policy_loss        | -0.105   |
+| total_timesteps    | 916359   |
+| value_loss         | 0.00167  |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 3.64e+04 |
+| explained_variance | 0.996    |
+| fps                | 218      |
+| nupdates           | 6600     |
+| policy_entropy     | 2.98     |
+| policy_loss        | -0.0663  |
+| total_timesteps    | 930459   |
+| value_loss         | 0.00661  |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 3.7e+04  |
+| explained_variance | -0.11    |
+| fps                | 218      |
+| nupdates           | 6700     |
+| policy_entropy     | 2.97     |
+| policy_loss        | 0.0553   |
+| total_timesteps    | 944559   |
+| value_loss         | 0.0137   |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 3.79e+04 |
+| explained_variance | 0.998    |
+| fps                | 218      |
+| nupdates           | 6800     |
+| policy_entropy     | 2.96     |
+| policy_loss        | -0.173   |
+| total_timesteps    | 958659   |
+| value_loss         | 0.0023   |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 3.64e+04 |
+| explained_variance | 0.998    |
+| fps                | 218      |
+| nupdates           | 6900     |
+| policy_entropy     | 2.93     |
+| policy_loss        | -0.105   |
+| total_timesteps    | 972759   |
+| value_loss         | 0.00259  |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 3.78e+04 |
+| explained_variance | 0.995    |
+| fps                | 219      |
+| nupdates           | 7000     |
+| policy_entropy     | 2.91     |
+| policy_loss        | 0.0808   |
+| total_timesteps    | 986859   |
+| value_loss         | 0.00374  |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 3.87e+04 |
+| explained_variance | 0.994    |
+| fps                | 219      |
+| nupdates           | 7100     |
+| policy_entropy     | 2.91     |
+| policy_loss        | -0.0225  |
+| total_timesteps    | 1000959  |
+| value_loss         | 0.01     |
+---------------------------------

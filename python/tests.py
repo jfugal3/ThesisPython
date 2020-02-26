@@ -677,6 +677,40 @@ def test_myPandaIKWrapper3D():
         env.render()
 
 
+def test_normalize_unnormalize_sym():
+    test1 = np.linspace(-3.12, 4.3, 10)
+    test2 = np.linspace(-50.4, -2.1, 10)
+    test3 = np.linspace(41.4, 60.5, 10)
+    nom = np.linspace(-1, 1, 10)
+
+    print("testing normalize_sym output ranges should be evenly distributed between -1 and +1.")
+    print("Test 1", np.around(helperFun.normalize_sym(test1, -3.12, 4.3),2))
+    print("Test 2", np.around(helperFun.normalize_sym(test2, -50.4, -2.1),2))
+    print("Test 3", np.around(helperFun.normalize_sym(test3, 41.4, 60.5),2))
+
+    print("testing unnormalize_sym")
+    print("Test 1: range [-3.12, 4.3]\n", np.around(helperFun.unnormalize_sym(nom, -3.12, 4.3),2))
+    print("Test 2: range [-50.4, -2.1]\n", np.around(helperFun.unnormalize_sym(nom, -50.4, -2.1),2))
+    print("Test 3: range [41.4, 60.5]\n", np.around(helperFun.unnormalize_sym(nom, 41.4, 60.5),2))
+
+
+def test_normalize_unnormalize():
+    test1 = np.linspace(-3.12, 4.3, 10)
+    test2 = np.linspace(-50.4, -2.1, 10)
+    test3 = np.linspace(41.4, 60.5, 10)
+    nom = np.linspace(0, 1, 10)
+
+    print("testing normalize output ranges should be evenly distributed between 0 and +1.")
+    print("Test 1", np.around(helperFun.normalize(test1, -3.12, 4.3),2))
+    print("Test 2", np.around(helperFun.normalize(test2, -50.4, -2.1),2))
+    print("Test 3", np.around(helperFun.normalize(test3, 41.4, 60.5),2))
+
+    print("testing unnormalize")
+    print("Test 1: range [-3.12, 4.3]\n", np.around(helperFun.unnormalize(nom, -3.12, 4.3),2))
+    print("Test 2: range [-50.4, -2.1]\n", np.around(helperFun.unnormalize(nom, -50.4, -2.1),2))
+    print("Test 3: range [41.4, 60.5]\n", np.around(helperFun.unnormalize(nom, 41.4, 60.5),2))
+
+
 
 TEST_MAP = {
 'test_generatePatternVel' : test_generatePatternVel,
@@ -700,7 +734,9 @@ TEST_MAP = {
 'test_cycle_through_orientations' : test_cycle_through_orientations,
 'test_my_panda_free_space_1goal' : test_my_panda_free_space_1goal,
 'test_grav_switch' : test_grav_switch,
-'test_myPandaIKWrapper3D' : test_myPandaIKWrapper3D
+'test_myPandaIKWrapper3D' : test_myPandaIKWrapper3D,
+'test_normalize_unnormalize' : test_normalize_unnormalize,
+'test_normalize_unnormalize_sym' : test_normalize_unnormalize_sym
 }
 
 

@@ -83,3 +83,24 @@ def eulerAnglesToRotationMatrix(theta) :
     R = np.dot(R_z, np.dot( R_y, R_x ))
 
     return R
+
+def normalize_sym(x, low, high):
+    # place in range from [-1, 1]
+    if np.any(high <= low):
+        print("helperFun.normalize_sym: range exception!")
+        print("low =", low)
+        print("high =", high)
+    return 2 * (x - low) / (high - low) - 1
+
+def unnormalize_sym(x, low, high):
+    if np.any(high <= low):
+        print("helperFun.unnormalize_sym: range exception!")
+        print("low =", low)
+        print("high =", high)
+    return (x + 1)*(high - low)/2 + low
+
+def normalize(x, low, high):
+    return (x - low) / (high - low)
+
+def unnormalize(x, low, high):
+    return x * (high - low) + low

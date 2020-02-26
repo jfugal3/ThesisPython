@@ -6,6 +6,8 @@ import numpy as np
 import glfw
 import os
 from helperFun import grav_options
+from helperFun import normalize
+from helperFun import unnormalize_sym
 
 class mySpec:
     def __init__(self):
@@ -29,38 +31,35 @@ class myPandaFreeSpace1Goal(superclass, gym.Env):
         self.via_point_reward = 100
         if self.has_renderer:
             self.myViewer = MjViewer(self.sim)
-
+        self.spec = mySpec()
         if self.grav_option == grav_options["perfect_comp"]:
             self.sim.model.opt.gravity[:] = np.zeros(3)
 
+        self.action_low = np.array([-87.0, -87.0, -87.0, -87.0, -12.0, -12.0, -12.0])
+        self.action_high = np.array([87.0, 87.0, 87.0, 87.0, 12.0, 12.0, 12.0])
+
+
         self.action_space = gym.spaces.Box(
-            low=np.array([-87.0, -87.0, -87.0, -87.0, -12.0, -12.0, -12.0]),
-            high=np.array([87.0, 87.0, 87.0, 87.0, 12.0, 12.0, 12.0]), dtype=np.float32
+            low=-np.ones(7),
+            high=np.ones(7),
+            dtype=np.float32
             )
 
-        self.observation_space = gym.spaces.Box(
-            low=np.array([
-                -2.8973, -1.7628, -2.8973, -3.0718, -2.8973, -0.0175, -2.8973, # joint position
-                -2.1750, -2.1750, -2.1750, -2.1750, -2.6100, -2.6100, -2.6100, # joint velocity
-                # 0.0, -4.0e-02, # gripper position
-                # -0.5, -0.5, # gripper velocity
-                #  0.0, 0.5, -0.15, 1.4,  # goal state
-                #  0.0, 0.5, 0.15, 1.4,
-                #  0.0, 0.5, 0.15, 1.2,
-                #  0.0, 0.5, -0.15, 1.2
-            ]),
-            high=np.array([
+        self.obs_low = np.array([
+            -2.8973, -1.7628, -2.8973, -3.0718, -2.8973, -0.0175, -2.8973, # joint position
+            -2.1750, -2.1750, -2.1750, -2.1750, -2.6100, -2.6100, -2.6100, # joint velocity
+        ])
+        self.obs_high = np.array([
                 2.8973, 1.7628, 2.8973, -0.0698, 2.8973, 3.7525, 2.8973,
                 2.1750, 2.1750, 2.1750, 2.1750, 2.6100, 2.6100, 2.6100,
-                # 4.0e-02, 0.0,
-                # 0.5, 0.5,
-                #  1.0, 0.5, -0.15, 1.4,  # goal state
-                #  1.0, 0.5, 0.15, 1.4,
-                #  1.0, 0.5, 0.15, 1.2,
-                #  1.0, 0.5, -0.15, 1.2
-            ]),
+            ])
+
+        self.observation_space = gym.spaces.Box(
+            low=np.zeros(14),
+            high=np.ones(14),
             dtype=np.float32
         )
+
 
     def _place_points(self):
         pass
@@ -82,7 +81,7 @@ class myPandaFreeSpace1Goal(superclass, gym.Env):
         q = state[1][:7]
         qd = state[2][:7]
         obs = np.concatenate([q, qd])#, gripper_pos, gripper_vel, obj_state])
-        return obs
+        return normalize(obs, self.obs_low, self.obs_high)
 
     def _get_reward(self):
         """
@@ -110,10 +109,8 @@ class myPandaFreeSpace1Goal(superclass, gym.Env):
         return {}
 
     def step(self, action):
-        if len(action) == 7:
-            self.sim.data.ctrl[:] = np.concatenate((action,[0,0]))
-        else:
-            self.sim.data.ctrl[:] = np.concatenate((action[0:7],[0,0]))
+        action = unnormalize_sym(action, self.action_low, self.action_high)
+        self.sim.data.ctrl[:] = np.concatenate((action,[0,0]))
 
         self.timestep += 1
         for i in range(int(self.control_timestep / self.model_timestep)):
