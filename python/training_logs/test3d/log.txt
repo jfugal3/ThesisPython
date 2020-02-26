@@ -1,0 +1,65 @@
+Logging to training_logs/test3d/
+---------------------------------
+| explained_variance | -0.0231  |
+| fps                | 23       |
+| nupdates           | 1        |
+| policy_entropy     | 4.26     |
+| policy_loss        | -0.108   |
+| total_timesteps    | 0        |
+| value_loss         | 49.1     |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 2.4e+03  |
+| explained_variance | -0.0244  |
+| fps                | 103      |
+| nupdates           | 100      |
+| policy_entropy     | 4.24     |
+| policy_loss        | 0.584    |
+| total_timesteps    | 2079     |
+| value_loss         | 141      |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 1.64e+03 |
+| explained_variance | 0.00239  |
+| fps                | 105      |
+| nupdates           | 200      |
+| policy_entropy     | 4.24     |
+| policy_loss        | 0.0144   |
+| total_timesteps    | 4179     |
+| value_loss         | 1e+03    |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 1.3e+03  |
+| explained_variance | 0.0232   |
+| fps                | 105      |
+| nupdates           | 300      |
+| policy_entropy     | 4.24     |
+| policy_loss        | 0.191    |
+| total_timesteps    | 6279     |
+| value_loss         | 1.44e+03 |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 1.69e+03 |
+| explained_variance | 0.185    |
+| fps                | 106      |
+| nupdates           | 400      |
+| policy_entropy     | 4.23     |
+| policy_loss        | 0.238    |
+| total_timesteps    | 8379     |
+| value_loss         | 56.4     |
+---------------------------------
+---------------------------------
+| ep_len_mean        | 1e+03    |
+| ep_reward_mean     | 1.9e+03  |
+| explained_variance | 0.000746 |
+| fps                | 106      |
+| nupdates           | 500      |
+| policy_entropy     | 4.23     |
+| policy_loss        | -0.143   |
+| total_timesteps    | 10479    |
+| value_loss         | 668      |
+---------------------------------
