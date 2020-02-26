@@ -8,6 +8,7 @@ from stable_baselines.bench import Monitor
 from stable_baselines.results_plotter import load_results, ts2xy
 from stable_baselines.common.vec_env import DummyVecEnv
 from stable_baselines.common.vec_env.subproc_vec_env import SubprocVecEnv
+from stable_baselines.common.vec_env import VecNormalize
 import stable_baselines.common.cmd_util
 from stable_baselines import logger
 from helperFun import StringException
@@ -112,6 +113,7 @@ if __name__ == "__main__":
         # print(env)
 
         env = stable_baselines.common.make_vec_env(env_handle, n_envs=7, monitor_dir=log_dir, env_kwargs=env_kwargs)
+        env = VecNormalize(env)
         RLAgent = ACKTR
         model = RLAgent('MlpPolicy', env, verbose=1).learn(total_timesteps=int(1e6), callback=callback)
         model.save("trained_agents/" + run_name)
