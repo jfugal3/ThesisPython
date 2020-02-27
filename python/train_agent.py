@@ -118,8 +118,8 @@ if __name__ == "__main__":
 
         env = stable_baselines.common.make_vec_env(env_handle, n_envs=7, monitor_dir=log_dir, env_kwargs=env_kwargs)
         env = VecNormalize(env, norm_obs=False, norm_reward=True)
-        RLAgent = ACKTR
-        model = RLAgent('MlpPolicy', env, verbose=1).learn(total_timesteps=int(1e6), callback=callback)
+        RLAgent = PPO2
+        model = RLAgent('MlpPolicy', env, verbose=1).learn(total_timesteps=int(5e5), callback=callback)
         model.save("trained_agents/" + run_name)
         env.save("trained_agents/env_" + run_name)
         #
