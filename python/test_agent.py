@@ -1,7 +1,7 @@
 from my_panda_free_space_traj import myPandaFreeSpaceTraj
 from my_panda_free_space_1goal import myPandaFreeSpace1Goal
 from my_panda_IK_wrapper_3d import myPandaIKWrapper3D
-from stable_baselines import DQN, PPO2, A2C, ACKTR
+from stable_baselines import DQN, PPO2, A2C, ACKTR, DDPG, TRPO
 from stable_baselines.bench import Monitor
 from stable_baselines.common.vec_env import DummyVecEnv
 from stable_baselines.common.evaluation import evaluate_policy
