@@ -53,8 +53,8 @@ def callback(_locals, _globals):
                 print("Saving new best model")
                 _locals['self'].save(log_dir + 'best_model.pkl')
                 env.save(log_dir + "vec_normalize.pkl")
-            _locals['self'].save(checkpoint_dir + "model_after_" + str(x[-1]) + ".pkl")
-            env.save(checkpoint_dir + "vec_normalize_env_after_" + str(x[-1]) + ".pkl")
+            _locals['self'].save(checkpoint_dir + "/model_after_" + str(x[-1]) + ".pkl")
+            env.save(checkpoint_dir + "/vec_normalize_env_after_" + str(x[-1]) + ".pkl")
 
             global rendering
             if rendering:
@@ -116,9 +116,9 @@ if __name__ == "__main__":
         # print(env.action_space)
         # print(env)
 
-        env = stable_baselines.common.make_vec_env(env_handle, n_envs=1, monitor_dir=log_dir, env_kwargs=env_kwargs)
+        env = stable_baselines.common.make_vec_env(env_handle, n_envs=7, monitor_dir=log_dir, env_kwargs=env_kwargs)
         env = VecNormalize(env, norm_obs=False, norm_reward=True)
-        RLAgent = SAC
+        RLAgent = ACKTR
         model = RLAgent('MlpPolicy', env, verbose=1).learn(total_timesteps=int(5e5), callback=callback)
         model.save("trained_agents/" + run_name)
         env.save("trained_agents/env_" + run_name)

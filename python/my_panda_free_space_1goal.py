@@ -83,7 +83,7 @@ class myPandaFreeSpace1Goal(superclass, gym.Env):
         obs = np.concatenate([q, qd])#, gripper_pos, gripper_vel, obj_state])
         return normalize(obs, self.obs_low, self.obs_high)
 
-    def _get_reward(self):
+    def _get_reward(self, action):
         """
         Return the reward obtained for a given action. Overall, reward increases as the robot
         checks via points in order.
@@ -100,6 +100,13 @@ class myPandaFreeSpace1Goal(superclass, gym.Env):
             reward += self.via_point_reward
 
         reward += self.distance_reward_weight * (1 - np.tanh(5 * dist))  # was 10
+        # reward -= reward * (np.abs(np.abs(action) - 1) < 0.0001) / len(self.action_low)
+        if np.any(np.abs(np.abs(action) - 1) < 0.0001):
+            reward = 0
+        # qpos = self.sim.get_state()[1][:7]
+        # qmax = self.obs_high[:7]
+        # qmin = self.obs_low[:7]
+        # if np.any(np.abs())
         return reward
 
     def _get_done(self):
@@ -109,15 +116,15 @@ class myPandaFreeSpace1Goal(superclass, gym.Env):
         return {}
 
     def step(self, action):
-        action = unnormalize_sym(action, self.action_low, self.action_high)
-        self.sim.data.ctrl[:] = np.concatenate((action,[0,0]))
+        tau = unnormalize_sym(action, self.action_low, self.action_high)
+        self.sim.data.ctrl[:] = np.concatenate((tau,[0,0]))
 
         self.timestep += 1
         for i in range(int(self.control_timestep / self.model_timestep)):
             self.sim.step()
 
         obs = self.unpack_obs()
-        reward = self._get_reward()
+        reward = self._get_reward(action)
         done = self._get_done()
         info = self._get_info()
         return obs, reward, done, info
