@@ -3,7 +3,7 @@ from my_panda_free_space_traj import myPandaFreeSpaceTraj
 from my_panda_free_space_1goal import myPandaFreeSpace1Goal
 from my_panda_IK_wrapper_3d import myPandaIKWrapper3D
 import my_panda_free_space_traj
-from stable_baselines import PPO2, A2C, ACKTR, DDPG, TRPO
+from stable_baselines import PPO2, A2C, ACKTR, DDPG, TRPO, TD3, SAC
 from stable_baselines.bench import Monitor
 from stable_baselines.results_plotter import load_results, ts2xy
 from stable_baselines.common.vec_env import DummyVecEnv
@@ -53,8 +53,8 @@ def callback(_locals, _globals):
                 print("Saving new best model")
                 _locals['self'].save(log_dir + 'best_model.pkl')
                 env.save(log_dir + "vec_normalize.pkl")
-            _locals['self'].save(checkpoint_dir + "model_after_" + str(x[-1]) + ".pkl")
-            env.save(checkpoint_dir + "vec_normalize_env_after_" + str(x[-1]) + ".pkl")
+            _locals['self'].save(checkpoint_dir + "/model_after_" + str(x[-1]) + ".pkl")
+            env.save(checkpoint_dir + "/vec_normalize_env_after_" + str(x[-1]) + ".pkl")
 
             global rendering
             if rendering:
@@ -119,7 +119,7 @@ if __name__ == "__main__":
         env = stable_baselines.common.make_vec_env(env_handle, n_envs=7, monitor_dir=log_dir, env_kwargs=env_kwargs)
         env = VecNormalize(env, norm_obs=False, norm_reward=True)
         RLAgent = ACKTR
-        model = RLAgent('MlpPolicy', env, verbose=1).learn(total_timesteps=int(1e6), callback=callback)
+        model = RLAgent('MlpPolicy', env, verbose=1).learn(total_timesteps=int(2e6), callback=callback)
         model.save("trained_agents/" + run_name)
         env.save("trained_agents/env_" + run_name)
         #

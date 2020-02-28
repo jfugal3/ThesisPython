@@ -28,15 +28,18 @@ class myPandaIKWrapper3D(superclass):
 
 
     def step(self, action):
-        action = unnormalize_sym(action, self.action_low, self.action_high)
-        qgoal = self.pandaIKController.get_qpos(action, self.rotation)
+        xpos = unnormalize_sym(action, self.action_low, self.action_high)
+        # dpos = 0.05 * action
+        # xpos = np.array(self.sim.data.body_xpos[self.sim.model.body_name2id('right_hand')]) - np.array([0,0,1])
+        # xpos_command = np.clip(xpos + dpos, self.action_low, self.action_high)
+        qgoal = self.pandaIKController.get_qpos(xpos, self.rotation)
         for i in range(int(self.control_timestep / self.model_timestep)):
             torque = np.concatenate((controllers.PDControl(q=self._get_qpos(), qd=self._get_qvel(), qgoal=qgoal),[0,0]))
             self.sim.data.ctrl[:] = torque
             self.sim.step()
 
         obs = self.unpack_obs()
-        reward = self._get_reward()
+        reward = self._get_reward(action)
         done = self._get_done()
         info = self._get_info()
         self.timestep += 1

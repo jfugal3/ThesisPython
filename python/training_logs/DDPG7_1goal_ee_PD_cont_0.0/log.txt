@@ -1,0 +1,1 @@
+Logging to training_logs/DDPG7_1goal_ee_PD_cont_0.0
