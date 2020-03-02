@@ -618,7 +618,7 @@ def test_cycle_through_orientations():
 
 
 def test_my_panda_free_space_1goal():
-    env = my_panda_free_space_1goal.myPandaFreeSpace1Goal(has_renderer=True)
+    env = my_panda_free_space_1goal.myPandaFreeSpace1Goal(has_renderer=True, grav_option=helperFun.grav_options["perfect_comp"])
     print(env.reset())
     for i in range(1000):
         obs, reward, done, info = env.step(np.random.uniform(low=-1.0, high=1.0))
@@ -753,6 +753,8 @@ def main():
             break
         if test not in TEST_MAP.keys():
             print("'{}' does not exist in the current tests.".format(test))
+            for key in TEST_MAP.keys():
+                print(key)
         else:
             print(test)
             TEST_MAP[test]()

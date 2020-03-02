@@ -41,5 +41,5 @@ algo_name = 'acktr'
 env_name = '1goal_perfect_comp'
 # model = create_model()
 # print(model())
-pd_data_frame = hyperparam_optimization(algo=algo_name, model_fn=create_model, env_fn=create_env, n_jobs=1, n_timesteps=10)
+pd_data_frame = hyperparam_optimization(algo=algo_name, model_fn=create_model, env_fn=create_env, n_jobs=1, n_timesteps=2010)
 print(pd_data_frame)
