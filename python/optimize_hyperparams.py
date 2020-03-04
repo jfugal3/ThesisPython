@@ -1,3 +1,6 @@
+import os
+import argparse
+
 from hyperparam_opt import hyperparam_optimization
 from my_panda_free_space_1goal import myPandaFreeSpace1Goal
 from my_panda_IK_wrapper_3d import myPandaIKWrapper3D
@@ -6,6 +9,7 @@ from helperFun import grav_options
 from stable_baselines import PPO2, A2C, ACKTR, DDPG, TRPO, TD3, SAC
 from stable_baselines.common.vec_env import VecNormalize
 from stable_baselines.common import make_vec_env
+from datetime import datetime
 
 ALGOS = {
     'a2c': A2C,
@@ -37,9 +41,30 @@ def create_model(*_args, **kwargs):
     return ALGOS[algo_name](policy='MlpPolicy', env=create_env(n_envs=1),
                             verbose=0, **kwargs)
 
-algo_name = 'acktr'
-env_name = '1goal_perfect_comp'
+parser = argparse.ArgumentParser(description="Optimize RL hyperparameters for specific environments")
+parser.add_argument("-a", "--RLAgent", help="RL algorithm", required=True, choices=ALGOS.keys())
+parser.add_argument("-e", "--env", help="Environment", required=True, choices=ENVS.keys())
+parser.add_argument("-j", "--n_jobs", type=int, help="number of jobs to run simultainiously", required=False, default=5)
+parser.add_argument("-tri", "--n_trials", type=int, help="number of hyperparamiterizations to try", required=False, default=1000)
+parser.add_argument("-ts", "--timesteps", type=int, help="number of timesteps to run each training session", required=False, default=int(1e5))
+args = parser.parse_args()
+
+
+
+algo_name = args.RLAgent
+env_name = args.env
+n_jobs = args.n_jobs
+n_trials = args.n_trials
+n_timesteps = args.timesteps
+
+
+dir_name = "hyperparams"
+file_name = os.path.join(dir_name, algo_name + "_" + env_name + ".csv")
 # model = create_model()
 # print(model())
-pd_data_frame = hyperparam_optimization(algo=algo_name, model_fn=create_model, env_fn=create_env, n_jobs=1, n_timesteps=2010)
+start_time = datetime.now()
+pd_data_frame = hyperparam_optimization(algo=algo_name, model_fn=create_model, env_fn=create_env, n_jobs=n_jobs, n_timesteps=n_timesteps, n_trials=n_trials)
 print(pd_data_frame)
+print("Saving data to$", file_name)
+pd_data_frame.to_csv(file_name)
+print("Elasped time", datetime.now() - start_time)

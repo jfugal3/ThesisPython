@@ -108,7 +108,7 @@ class myPandaIKController:
 
         # Set up a connection to the PyBullet simulator.
         p.connect(p.DIRECT)
-        p.resetSimulation()
+        # p.resetSimulation()
 
         # get paths to urdfs
         self.robot_urdf = pjoin(
@@ -119,16 +119,14 @@ class myPandaIKController:
 
         # Simulation will update as fast as it can in real time, instead of waiting for
         # step commands like in the non-realtime case.
-        p.setRealTimeSimulation(1)
+        # p.setRealTimeSimulation(1)
 
-    def sync_ik_robot(self, joint_positions, simulate=False, sync_last=True):
+    def sync_ik_robot(self, joint_positions, sync_last=True):
         """
         Force the internal robot model to match the provided joint angles.
 
         Args:
             joint_positions (list): a list or flat numpy array of joint positions.
-            simulate (bool): If True, actually use physics simulation, else
-                write to physics state directly.
             sync_last (bool): If False, don't sync the last joint angle. This
                 is useful for directly controlling the roll at the end effector.
         """
@@ -136,20 +134,12 @@ class myPandaIKController:
         num_joints = len(joint_positions)
         if not sync_last:
             num_joints -= 1
+        # print("\n\n\n")
+        # print(num_joints)
+        # print(p.getLinkState(self.ik_robot, ))
+        # print("\n\n\n")
         for i in range(num_joints):
-            if simulate:
-                p.setJointMotorControl2(
-                    self.ik_robot,
-                    i,
-                    p.POSITION_CONTROL,
-                    targetVelocity=0,
-                    targetPosition=joint_positions[i],
-                    force=500,
-                    positionGain=0.5,
-                    velocityGain=1.,
-                )
-            else:
-                p.resetJointState(self.ik_robot, i, joint_positions[i], 0)
+            p.resetJointState(self.ik_robot, i, joint_positions[i], 0)
 
     def ik_robot_eef_joint_cartesian_pose(self):
         """

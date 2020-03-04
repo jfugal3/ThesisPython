@@ -4,6 +4,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import sys
 from helperFun import StringException
+import argparse
+import os
 
 
 def moving_average(values, window):
@@ -69,53 +71,78 @@ def compare_results(log_folders, names, title="Learning Curves", colors=["b", "g
     plt.show()
 
 if __name__ == "__main__":
-    try:
-        log_dir_index = -1
-        run_name_index = -1
-        colors_index = -1
-        for i in range(len(sys.argv)):
-            # print(sys.argv[i][0:len('log_dirs=')])
-            # print(sys.argv[i][0:len('run_names=')])
-            # print(sys.argv[i][0:len('colors=')])
-            # print(type(sys.argv[i][0:len('colors=')]))
+    parser = argparse.ArgumentParser("Function for plotting learning curves for saved logs of RL rollouts.")
+    parser.add_argument("-ld", "--log_dirs", nargs="+", help="<required> Set flag", required=True)
+    parser.add_argument("-rn", "--run_names", nargs="+", help="<required> Set flag", required=True)
+    parser.add_argument("-c", "--colors", nargs="+", help="<required> Set flag", required=True)
+    parser.add_argument("-t", "--title", help="title of plot", required=False, default="Learning Curves")
+    args = parser.parse_args()
 
-            if sys.argv[i][0:len('log_dirs=')] == 'log_dirs=':
-                log_dir_index = i
-            if sys.argv[i][0:len('run_names=')] == 'run_names=':
-                run_name_index = i
-            if sys.argv[i][0:len('colors=')] == 'colors=':
-                colors_index = i
+    log_dirs = args.log_dirs
+    names = args.run_names
+    colors = args.colors
+    title = args.title.replace('_', ' ')
 
-        # print(log_dir_index)
-        # print(run_name_index)
-        # print(colors_index)
-
-        if log_dir_index == -1 or run_name_index == -1:
-            raise StringException("Usage: log_dirs=<comma separated log dirs> run_names=<comma separated run names> colors=<comma separated color initials (optional)>")
-
-
-        log_dirs = sys.argv[log_dir_index][len('log_dirs='):].split(',')
-        names = sys.argv[run_name_index][len('run_names='):].split(',')
-        if colors_index != -1:
-            colors = sys.argv[colors_index][len('colors='):].split(',')
-        else:
-            colors = None
-
-        if len(log_dirs) != len(names) or len(names) != len(colors) and colors is not None:
-            raise StringException("Length of lists must be equal.\n" + str(log_dirs) + "\n" + str(names) + "\n" + str(colors))
-
-        top_dir = "training_logs/"
+    if len(log_dirs) != len(names) or len(log_dirs) != len(colors):
+        print("number of log directories, run_names, and colors must be equal.")
+        print("len(log_dirs) =", len(log_dirs))
+        print("len(run_names) =", len(names))
+        print("len(colors) =", len(colors))
+    else:
+        top_dir = "training_logs"
         for i in range(len(log_dirs)):
-            log_dirs[i] = top_dir + log_dirs[i]
-            names[i] = names[i].replace('_',' ')
-        print("colors:",colors)
-        if colors is not None:
-            compare_results(log_folders=log_dirs, names=names, colors=colors)
-        else:
-            compare_results(log_folders=log_dirs, names=names)
+            log_dirs[i] = os.path.join(top_dir, log_dirs[i])
+            names[i] = names[i].replace('_', ' ')
+        compare_results(log_folders=log_dirs, names=names, title=title, colors=colors)
 
-    except StringException as e:
-        print(e.what())
+# if __name__ == "__main__":
+#     try:
+#         log_dir_index = -1
+#         run_name_index = -1
+#         colors_index = -1
+#         for i in range(len(sys.argv)):
+#             # print(sys.argv[i][0:len('log_dirs=')])
+#             # print(sys.argv[i][0:len('run_names=')])
+#             # print(sys.argv[i][0:len('colors=')])
+#             # print(type(sys.argv[i][0:len('colors=')]))
+#
+#             if sys.argv[i][0:len('log_dirs=')] == 'log_dirs=':
+#                 log_dir_index = i
+#             if sys.argv[i][0:len('run_names=')] == 'run_names=':
+#                 run_name_index = i
+#             if sys.argv[i][0:len('colors=')] == 'colors=':
+#                 colors_index = i
+#
+#         # print(log_dir_index)
+#         # print(run_name_index)
+#         # print(colors_index)
+#
+#         if log_dir_index == -1 or run_name_index == -1:
+#             raise StringException("Usage: log_dirs=<comma separated log dirs> run_names=<comma separated run names> colors=<comma separated color initials (optional)>")
+#
+#
+#         log_dirs = sys.argv[log_dir_index][len('log_dirs='):].split(',')
+#         names = sys.argv[run_name_index][len('run_names='):].split(',')
+#         if colors_index != -1:
+#             colors = sys.argv[colors_index][len('colors='):].split(',')
+#         else:
+#             colors = None
+#
+#         if len(log_dirs) != len(names) or len(names) != len(colors) and colors is not None:
+#             raise StringException("Length of lists must be equal.\n" + str(log_dirs) + "\n" + str(names) + "\n" + str(colors))
+#
+#         top_dir = "training_logs/"
+#         for i in range(len(log_dirs)):
+#             log_dirs[i] = top_dir + log_dirs[i]
+#             names[i] = names[i].replace('_',' ')
+#         print("colors:",colors)
+#         if colors is not None:
+#             compare_results(log_folders=log_dirs, names=names, colors=colors)
+#         else:
+#             compare_results(log_folders=log_dirs, names=names)
+#
+#     except StringException as e:
+#         print(e.what())
 
 # if __name__ == "__main__":
 #     try:

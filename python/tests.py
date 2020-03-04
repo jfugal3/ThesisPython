@@ -668,12 +668,12 @@ def test_grav_switch():
 
 def test_myPandaIKWrapper3D():
     env = myPandaIKWrapper3D(has_renderer=True)
-    print(env.action_space)
+    # print(env.action_space)
     # goal1 = np.array([0.25, 0.5, 0.25])
     goal1 = np.array([0.6, -0.2, 0.4])
     for i in range(1000):
         obs, reward, done, info = env.step(goal1)
-        print(reward)
+        # print(reward)
         env.render()
 
 
