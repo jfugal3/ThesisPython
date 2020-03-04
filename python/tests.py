@@ -1,6 +1,7 @@
 import randVelGen
 import bounds
 import helperFun
+from helperFun import grav_options
 import generatePatternedTrajectories
 from my_panda_free_space_traj import myPandaFreeSpaceTraj
 import controllers
@@ -14,6 +15,7 @@ from mujoco_py import load_model_from_path, MjSim, MjViewer, MjSimState
 import my_panda_free_space_1goal
 import gym
 from my_panda_IK_wrapper_3d import myPandaIKWrapper3D
+from my_panda_lift import myPandaLift
 
 def test_generatePatternVel():
     gen = randVelGen.RandVelGenerator()
@@ -628,12 +630,13 @@ def test_my_panda_free_space_1goal():
 
 
 def test_grav_switch():
-    gym.envs.registration.register(
-        id="myPandaFreeSpace1Goal-v0",
-        entry_point="my_panda_free_space_1goal:myPandaFreeSpace1Goal"
-        )
-
-    env = gym.make("myPandaFreeSpace1Goal-v0", grav_option=0, has_renderer=True)
+    # gym.envs.registration.register(
+    #     id="myPandaFreeSpace1Goal-v0",
+    #     entry_point="my_panda_free_space_1goal:myPandaFreeSpace1Goal"
+    #     )
+    #
+    # env = gym.make("myPandaFreeSpace1Goal-v0", grav_option=0, has_renderer=True)
+    env = my_panda_free_space_1goal.myPandaFreeSpace1Goal(has_renderer=True, grav_option=helperFun.grav_options["perfect_comp"])
     print("without gravity")
     for i in range(1000):
         env.step(np.zeros(7))
@@ -649,7 +652,7 @@ def test_grav_switch():
         env.step(np.zeros(7))
         env.render()
 
-    env = gym.make("myPandaFreeSpace1Goal-v0", grav_option=1, has_renderer=True)
+    env = my_panda_free_space_1goal.myPandaFreeSpace1Goal(has_renderer=True, grav_option=helperFun.grav_options["no_comp"])
     print("with gravity")
     for i in range(1000):
         env.step(np.zeros(7))
@@ -710,6 +713,60 @@ def test_normalize_unnormalize():
     print("Test 2: range [-50.4, -2.1]\n", np.around(helperFun.unnormalize(nom, -50.4, -2.1),2))
     print("Test 3: range [41.4, 60.5]\n", np.around(helperFun.unnormalize(nom, 41.4, 60.5),2))
 
+def test_my_panda_lift():
+    print("testing no gravity compensation")
+    env = myPandaLift(has_renderer=True, grav_option=grav_options["no_comp"])
+    env.reset()
+    for i in range(1000):
+        action = env.action_space.sample()
+        env.step(action)
+        env.render()
+    env.reset()
+    for i in range(1000):
+        action = env.action_space.sample()
+        env.step(action)
+        env.render()
+
+    print("testing gravity compensation")
+    env = myPandaLift(has_renderer=True, grav_option=grav_options["perfect_comp"])
+    env.reset()
+    for i in range(1000):
+        action = env.action_space.sample()
+        env.step(action)
+        env.render()
+    env.reset()
+    for i in range(1000):
+        action = env.action_space.sample()
+        env.step(action)
+        env.render()
+
+    print("testing end-effector control")
+    env = myPandaLift(has_renderer=True, grav_option=grav_options["ee_PD_cont"])
+    env.reset()
+    for i in range(1000):
+        action = env.action_space.sample()
+        env.step(action)
+        env.render()
+    env.reset()
+    for i in range(1000):
+        action = env.action_space.sample()
+        env.step(action)
+        env.render()
+
+    print("testing joint space position control")
+    env = myPandaLift(has_renderer=True, grav_option=grav_options["q_PD_cont"])
+    env.reset()
+    for i in range(1000):
+        action = env.action_space.sample()
+        env.step(action)
+        env.render()
+    env.reset()
+    for i in range(1000):
+        action = env.action_space.sample()
+        env.step(action)
+        env.render()
+
+
 
 
 TEST_MAP = {
@@ -736,7 +793,8 @@ TEST_MAP = {
 'test_grav_switch' : test_grav_switch,
 'test_myPandaIKWrapper3D' : test_myPandaIKWrapper3D,
 'test_normalize_unnormalize' : test_normalize_unnormalize,
-'test_normalize_unnormalize_sym' : test_normalize_unnormalize_sym
+'test_normalize_unnormalize_sym' : test_normalize_unnormalize_sym,
+"test_my_panda_lift" : test_my_panda_lift
 }
 
 

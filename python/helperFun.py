@@ -22,8 +22,8 @@ class StringException(Exception):
 grav_options = {
     "perfect_comp" : 0,
     "no_comp" : 1,
-    "ee_PD_cont" : 2
-    # "estimated_comp" : 2
+    "ee_PD_cont" : 2,
+    "q_PD_cont" : 3
 }
 
 

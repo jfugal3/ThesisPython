@@ -21,7 +21,7 @@ class myPandaFreeSpace1Goal(superclass, gym.Env):
         self.grav_option = grav_option
         self.num_via_points = 1
         self.via_points = np.array([[0] + target_xyz])
-        superclass.__init__(self, has_renderer=False, has_offscreen_renderer=False, use_camera_obs=False)
+        superclass.__init__(self, has_renderer=has_renderer, has_offscreen_renderer=False, use_camera_obs=False)
         # self.spec = mySpec()
         # self.viewer.set_camera(camera_id=0)
         self.has_renderer = has_renderer
@@ -29,8 +29,8 @@ class myPandaFreeSpace1Goal(superclass, gym.Env):
         self.horizon = 1000
         self.distance_reward_weight = 30
         self.via_point_reward = 100
-        if self.has_renderer:
-            self.myViewer = MjViewer(self.sim)
+        # if self.has_renderer:
+        #     self.myViewer = MjViewer(self.sim)
         self.spec = mySpec()
         if self.grav_option == grav_options["perfect_comp"]:
             self.sim.model.opt.gravity[:] = np.zeros(3)
@@ -66,9 +66,9 @@ class myPandaFreeSpace1Goal(superclass, gym.Env):
 
     def reset(self):
         superclass.reset(self)
-        if self.has_renderer:
-            glfw.destroy_window(self.myViewer.window)
-            self.myViewer = MjViewer(self.sim)
+        # if self.has_renderer:
+        #     glfw.destroy_window(self.myViewer.window)
+        #     self.myViewer = MjViewer(self.sim)
         if self.grav_option == grav_options["perfect_comp"]:
             self.sim.model.opt.gravity[:] = np.zeros(3)
         return self.unpack_obs()
@@ -129,12 +129,12 @@ class myPandaFreeSpace1Goal(superclass, gym.Env):
         info = self._get_info()
         return obs, reward, done, info
 
-    def render(self, mode="human"):
-        # superclass.render(self)
-        if not self.has_renderer:
-            print("Environment not in render mode!")
-            return
-        self.myViewer.render()
+    # def render(self, mode="human"):
+    #     # superclass.render(self)
+    #     if not self.has_renderer:
+    #         print("Environment not in render mode!")
+    #         return
+    #     self.myViewer.render()
 
 
 if __name__ == "__main__":

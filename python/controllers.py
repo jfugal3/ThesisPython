@@ -1,5 +1,6 @@
 import numpy as np
 import helperFun
+import my_panda_IK_controller
 
 
   # d<< 20, 15, 15, 10, 10, 10.0, 5.0;
@@ -35,6 +36,37 @@ def moveAwayFromTable(q,qd):
     qgoal[1] = -0.0125
     qgoal[3] = -0.1780
     return PDControl(q,qd,qgoal)
+
+def env_torque_control(sim, torque, control_steps, gripper_force=None):
+    for _ in range(control_steps):
+        sim.data.ctrl[:7] = torque
+        if gripper_force is not None:
+            sim.data.ctrl[7:] = gripper_force
+        else:
+            sim.data.ctrl[7:] = np.zeros(2)
+        sim.step()
+
+def env_PD_control(sim, qpos, control_steps, gripper_force=None):
+    for _ in range(control_steps):
+        q = sim.get_state()[1][0:7]
+        qd = sim.get_state()[2][0:7]
+        torque = PDControl(q, qd, qpos)
+        sim.data.ctrl[:7] = torque
+        if gripper_force is not None:
+            sim.data.ctrl[7:] = gripper_force
+        else:
+            sim.data.ctrl[7:] = np.zeros(2)
+        sim.step()
+
+# def env_ee_PD_cont_3d(sim, xpos, control_steps, gripper=False, gripper_force=None, IK_controller):
+#
+#     for _ in range(control_steps):
+#         sim.data.ctrl[:7] = torque
+#         if gripper:
+#             sim.data.ctrl[7:] = gripper_force
+#         else:
+#             sim.data.ctrl[7:] = np.zeros(2)
+#         sim.step()
 
 
 # def moveToPos(sim, qgoal):

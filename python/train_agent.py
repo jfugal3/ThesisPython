@@ -116,12 +116,14 @@ if __name__ == "__main__":
         # print(env.action_space)
         # print(env)
 
-        env = stable_baselines.common.make_vec_env(env_handle, n_envs=7, monitor_dir=log_dir, env_kwargs=env_kwargs)
+        env = stable_baselines.common.make_vec_env(env_handle, n_envs=1, monitor_dir=log_dir, env_kwargs=env_kwargs)
         env = VecNormalize(env, norm_obs=False, norm_reward=True)
         RLAgent = ACKTR
-        model = RLAgent('MlpPolicy', env, verbose=1).learn(total_timesteps=int(5e5), callback=callback)
+        kwargs = {'n_steps': 32, 'gamma': 0.9, 'ent_coef': 5.616032613563221e-05, 'lr_schedule': 'constant', 'vf_coef': 0.589909976354571, 'learning_rate': 0.011744371482738521}
+        model = RLAgent('MlpPolicy', env, verbose=1, **kwargs).learn(total_timesteps=int(1e6), callback=callback)
         model.save("trained_agents/" + run_name)
         env.save("trained_agents/env_" + run_name)
+        print(kwargs)
         #
         duration = 1  # seconds
         freq = 440  # Hz
