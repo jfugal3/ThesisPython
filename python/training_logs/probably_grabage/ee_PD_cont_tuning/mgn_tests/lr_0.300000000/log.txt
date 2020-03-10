@@ -1,0 +1,1 @@
+Logging to training_logs/ee_PD_cont_tuning/mgn_tests/lr_0.300000000

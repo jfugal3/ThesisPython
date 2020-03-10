@@ -2,6 +2,7 @@ from stable_baselines import results_plotter
 from stable_baselines.results_plotter import load_results, ts2xy
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib
 import sys
 from helperFun import StringException
 import argparse
@@ -71,10 +72,11 @@ def compare_results(log_folders, names, title="Learning Curves", colors=["b", "g
     plt.show()
 
 if __name__ == "__main__":
+    matplotlib.rc('font', size=14)
     parser = argparse.ArgumentParser("Function for plotting learning curves for saved logs of RL rollouts.")
     parser.add_argument("-ld", "--log_dirs", nargs="+", help="<required> Set flag", required=True)
     parser.add_argument("-rn", "--run_names", nargs="+", help="<required> Set flag", required=True)
-    parser.add_argument("-c", "--colors", nargs="+", help="<required> Set flag", required=True)
+    parser.add_argument("-c", "--colors", nargs="+", help="<required> Set flag", required=True, default=["b", "g", "r", "c", "m", "y", "k"])
     parser.add_argument("-t", "--title", help="title of plot", required=False, default="Learning Curves")
     args = parser.parse_args()
 
@@ -82,7 +84,8 @@ if __name__ == "__main__":
     names = args.run_names
     colors = args.colors
     title = args.title.replace('_', ' ')
-
+    if colors[0] == "default":
+        colors = ["b", "g", "r", "c", "m", "y", "k"][:len(names)]
     if len(log_dirs) != len(names) or len(log_dirs) != len(colors):
         print("number of log directories, run_names, and colors must be equal.")
         print("len(log_dirs) =", len(log_dirs))

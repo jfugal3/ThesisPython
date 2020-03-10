@@ -242,7 +242,7 @@ class myPandaIKController:
         # Set default rest pose as a neutral down-position over the center of the table
         rest_poses = [0, np.pi/6, 0.00, -(np.pi - 2*np.pi/6), 0.00, (np.pi - np.pi/6), np.pi/4]
 
-        for bullet_i in range(2):
+        for bullet_i in range(100):
             arm_joint_pos = self.inverse_kinematics(
                 world_targets[0], world_targets[1], rest_poses=rest_poses
             )

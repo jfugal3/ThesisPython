@@ -101,11 +101,12 @@ class myPandaFreeSpace1Goal(superclass, gym.Env):
 
         reward += self.distance_reward_weight * (1 - np.tanh(5 * dist))  # was 10
         # reward -= reward * (np.abs(np.abs(action) - 1) < 0.0001) / len(self.action_low)
-        if np.any(np.abs(np.abs(action) - 1) < 0.0001):
-            reward = 0
-        # qpos = self.sim.get_state()[1][:7]
-        # qmax = self.obs_high[:7]
-        # qmin = self.obs_low[:7]
+        # if np.any(np.abs(np.abs(action) - 1) < 0.0001):
+        #     reward = 0
+        qpos = self.sim.get_state()[1][:7]
+        qmax = self.obs_high[:7]
+        qmin = self.obs_low[:7]
+        reward -= np.sum(np.logical_or(np.abs(qmax - qpos) < 0.0001, np.abs(qmin - qpos) < 0.0001)) / 7.0 * reward
         # if np.any(np.abs())
         return reward
 

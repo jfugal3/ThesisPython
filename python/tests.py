@@ -16,6 +16,8 @@ import my_panda_free_space_1goal
 import gym
 from my_panda_IK_wrapper_3d import myPandaIKWrapper3D
 from my_panda_lift import myPandaLift
+from optimize_hyperparams import create_env
+from optimize_hyperparams import ENVS
 
 def test_generatePatternVel():
     gen = randVelGen.RandVelGenerator()
@@ -767,6 +769,13 @@ def test_my_panda_lift():
         env.render()
 
 
+def test_creat_env_1goal_ee_PD_cont():
+    # env = create_env(n_envs=1, env_name="1goal_ee_PD_cont")
+    env = myPandaIKWrapper3D(has_renderer=True)
+    env.reset()
+    for i in range(2000):
+        env.step(helperFun.normalize_sym(np.array([0.6, -0.2, 0.4]), env.action_low, env.action_high))
+        env.render()
 
 
 TEST_MAP = {
@@ -794,7 +803,8 @@ TEST_MAP = {
 'test_myPandaIKWrapper3D' : test_myPandaIKWrapper3D,
 'test_normalize_unnormalize' : test_normalize_unnormalize,
 'test_normalize_unnormalize_sym' : test_normalize_unnormalize_sym,
-"test_my_panda_lift" : test_my_panda_lift
+'test_my_panda_lift' : test_my_panda_lift,
+'test_creat_env_1goal_ee_PD_cont': test_creat_env_1goal_ee_PD_cont
 }
 
 

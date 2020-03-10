@@ -1,0 +1,7 @@
+python train_agent.py -env '1goal_ee_PD_cont' -n_envs=4 -rn ee_PD_cont_tuning/lr_0.000010000 -lr 0.000010000
+
+python train_agent.py -env '1goal_no_comp' -n_envs=4 -rn no_comp_best_lr/lr_0.25_r3 -lr 0.25
+
+python train_agent.py -env '1goal_perfect_comp' -n_envs=4 -rn perfect_comp_best_lr/lr_0.0375_r0 -lr 0.0375
+
+python plot_learning_curves.py -ld perfect_comp_best_lr/lr_0.0375_r0 perfect_comp_best_lr/lr_0.0375_r1 perfect_comp_best_lr/lr_0.0375_r2 perfect_comp_best_lr/lr_0.0375_r3 perfect_comp_best_lr/lr_0.0375_r4 no_comp_best_lr/lr_0.25_r0 no_comp_best_lr/lr_0.25_r1 no_comp_best_lr/lr_0.25_r2 no_comp_best_lr/lr_0.25_r3 no_comp_best_lr/lr_0.25_r4 -rn Perfect_Comp asdf asdf asdf asdf No_Comp asdf asdf asdf sdf -c r r r r r b b b b b -t Compare_Gravity_Options
