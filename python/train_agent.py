@@ -1,4 +1,5 @@
 # from myPandaDoorEnv import myPandaDoor
+from my_panda_lift import myPandaLift
 from my_panda_free_space_traj import myPandaFreeSpaceTraj
 from my_panda_free_space_1goal import myPandaFreeSpace1Goal
 from my_panda_IK_wrapper_3d import myPandaIKWrapper3D

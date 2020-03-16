@@ -72,7 +72,7 @@ def compare_results(log_folders, names, title="Learning Curves", colors=["b", "g
     plt.show()
 
 if __name__ == "__main__":
-    matplotlib.rc('font', size=14)
+    matplotlib.rc('font', size=16)
     parser = argparse.ArgumentParser("Function for plotting learning curves for saved logs of RL rollouts.")
     parser.add_argument("-ld", "--log_dirs", nargs="+", help="<required> Set flag", required=True)
     parser.add_argument("-rn", "--run_names", nargs="+", help="<required> Set flag", required=True)

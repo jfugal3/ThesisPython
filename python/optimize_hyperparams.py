@@ -1,6 +1,6 @@
 import os
 import argparse
-
+from my_panda_lift import myPandaLift
 from hyperparam_opt import hyperparam_optimization
 from my_panda_free_space_1goal import myPandaFreeSpace1Goal
 from my_panda_IK_wrapper_3d import myPandaIKWrapper3D
@@ -10,6 +10,7 @@ from stable_baselines import PPO2, A2C, ACKTR, DDPG, TRPO, TD3, SAC
 from stable_baselines.common.vec_env import VecNormalize
 from stable_baselines.common import make_vec_env
 from datetime import datetime
+from functools import partial
 
 ALGOS = {
     'a2c': A2C,
@@ -27,14 +28,22 @@ env_kwargs = 1
 ENVS = {
     '1goal_no_comp': [myPandaFreeSpace1Goal, {'has_renderer': False, 'grav_option': grav_options["no_comp"]}],
     '1goal_perfect_comp': [myPandaFreeSpace1Goal, {'has_renderer': False, 'grav_option': grav_options["perfect_comp"]}],
-    '1goal_ee_PD_cont': [myPandaIKWrapper3D, {'has_renderer': False}]
+    '1goal_ee_PD_cont': [myPandaIKWrapper3D, {'has_renderer': False}],
+    'panda_lift_no_comp': [myPandaLift, {'has_renderer': False, 'grav_option': grav_options['no_comp']}],
+    'panda_lift_perfect_comp': [myPandaLift, {'has_renderer': False, 'grav_option': grav_options['perfect_comp']}],
+    'panda_lift_ee_PD_cont': [myPandaLift, {'has_renderer': False, 'grav_option': grav_options['ee_PD_cont']}]
 }
 
-
-def create_env(n_envs, eval_env=False, env_name=None, log_dir=None):
-    # if env_name is None:
-    #     global env_name
+def create_env(n_envs, eval_env=False):
+    global env_name
     return VecNormalize(make_vec_env(ENVS[env_name][env_id], n_envs=n_envs, env_kwargs=ENVS[env_name][env_kwargs], monitor_dir=log_dir), norm_obs=False, norm_reward=True)
+    
+def create_env(n_envs, eval_env=False, env_name=None, log_dir=None):
+    return VecNormalize(make_vec_env(ENVS[env_name][env_id], n_envs=n_envs, env_kwargs=ENVS[env_name][env_kwargs], monitor_dir=log_dir), norm_obs=False, norm_reward=True)
+
+# def env_fn(n_envs, eval_env):
+#     global env_name
+#     return create_env(n_envs, eval_env, env_name)
 
 
 def create_model(*_args, **kwargs):
@@ -66,7 +75,9 @@ if __name__ == '__main__':
     # model = create_model()
     # print(model())
     start_time = datetime.now()
-    pd_data_frame = hyperparam_optimization(algo=algo_name, model_fn=create_model, env_fn=create_env, n_jobs=n_jobs, n_timesteps=n_timesteps, n_trials=n_trials)
+    # env_fn = lambda n_envs, eval_env, env_name=env_name: create_env(n_envs=n_envs, eval_env=eval_env, env_name=env_name)
+    env_fn = partial(create_env, env_name=env_name)
+    pd_data_frame = hyperparam_optimization(algo=algo_name, model_fn=create_model, env_fn=env_fn, n_jobs=n_jobs, n_timesteps=n_timesteps, n_trials=n_trials)
     print(pd_data_frame)
     print("Saving data to$", file_name)
     pd_data_frame.to_csv(file_name)
