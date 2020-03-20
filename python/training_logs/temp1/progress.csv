@@ -1,0 +1,2 @@
+value_loss,policy_loss,policy_entropy,nupdates,total_timesteps,fps,explained_variance
+9.562207221984863,-0.11253312975168228,9.93256950378418,1,0,25,-0.09056723117828369

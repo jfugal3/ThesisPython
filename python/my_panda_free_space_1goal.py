@@ -83,7 +83,7 @@ class myPandaFreeSpace1Goal(superclass, gym.Env):
         obs = np.concatenate([q, qd])#, gripper_pos, gripper_vel, obj_state])
         return normalize(obs, self.obs_low, self.obs_high)
 
-    def _get_reward(self, action):
+    def _get_reward(self, action, apply_bound_penalty=True):
         """
         Return the reward obtained for a given action. Overall, reward increases as the robot
         checks via points in order.
@@ -103,10 +103,11 @@ class myPandaFreeSpace1Goal(superclass, gym.Env):
         # reward -= reward * (np.abs(np.abs(action) - 1) < 0.0001) / len(self.action_low)
         # if np.any(np.abs(np.abs(action) - 1) < 0.0001):
         #     reward = 0
-        qpos = self.sim.get_state()[1][:7]
-        qmax = self.obs_high[:7]
-        qmin = self.obs_low[:7]
-        reward -= np.sum(np.logical_or(np.abs(qmax - qpos) < 0.0001, np.abs(qmin - qpos) < 0.0001)) / 7.0 * reward
+        if apply_bound_penalty:
+            qpos = self.sim.get_state()[1][:7]
+            qmax = self.obs_high[:7]
+            qmin = self.obs_low[:7]
+            reward -= np.sum(np.logical_or(qpos < qmin + 0.0001, qpos > qmax - 0.0001)) / 7.0 * reward
         # if np.any(np.abs())
         return reward
 

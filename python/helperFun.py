@@ -2,6 +2,7 @@ import numpy as np
 import datetime
 import math
 
+
 def moving(qd):
     return np.linalg.norm(qd) > 0.1
 

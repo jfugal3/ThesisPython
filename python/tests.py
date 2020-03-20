@@ -769,14 +769,20 @@ def test_my_panda_lift():
         env.render()
 
 
-def test_creat_env_1goal_ee_PD_cont():
+def test_create_env_1goal_ee_PD_cont():
     # env = create_env(n_envs=1, env_name="1goal_ee_PD_cont")
     env = myPandaIKWrapper3D(has_renderer=True)
     env.reset()
-    for i in range(2000):
-        env.step(helperFun.normalize_sym(np.array([0.6, -0.2, 0.4]), env.action_low, env.action_high))
+    total_reward = 0
+    for i in range(1000):
+        action = helperFun.normalize_sym(np.array([0.6, -0.2, 0.4]), env.action_low, env.action_high)
+        obs, reward, done, info = env.step(action)
+        total_reward += reward
         env.render()
-
+        if i % 1000 == 0:
+            print(action)
+    print("reward =",total_reward)
+    print(np.array(env.sim.data.body_xpos[env.sim.model.body_name2id('right_hand')]))
 
 TEST_MAP = {
 'test_generatePatternVel' : test_generatePatternVel,
@@ -804,7 +810,7 @@ TEST_MAP = {
 'test_normalize_unnormalize' : test_normalize_unnormalize,
 'test_normalize_unnormalize_sym' : test_normalize_unnormalize_sym,
 'test_my_panda_lift' : test_my_panda_lift,
-'test_creat_env_1goal_ee_PD_cont': test_creat_env_1goal_ee_PD_cont
+'test_create_env_1goal_ee_PD_cont': test_create_env_1goal_ee_PD_cont
 }
 
 

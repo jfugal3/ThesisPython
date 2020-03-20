@@ -14,8 +14,8 @@ import stable_baselines.common.cmd_util
 from stable_baselines import logger
 from helperFun import StringException
 from helperFun import grav_options
-from optimize_hyperparams import create_env
-from optimize_hyperparams import ENVS
+from env_creator import create_env
+from env_creator import ENVS
 import argparse
 
 # from stable_baselines.common import make_vec_env
@@ -93,7 +93,7 @@ if __name__ == "__main__":
     #
     #     if grav_option not in grav_options:
     #         raise StringException(grav_option + "is not a valid gravity option." + "\nValid options:\n" + str(grav_options))
-    kwargs = {'gamma':0.99, 'n_steps':20, 'ent_coef':0.01, 'vf_coef':0.25, 'vf_fisher_coef':1.0, 'learning_rate':1.00000000e-05, 'max_grad_norm':0.5, 'kfac_clip':0.001, 'lr_schedule':'constant', 'kfac_update':1}
+    kwargs = {'gamma':0.999, 'n_steps':20, 'ent_coef':0.01, 'vf_coef':0.25, 'vf_fisher_coef':1.0, 'learning_rate':1.00000000e-05, 'max_grad_norm':0.5, 'kfac_clip':0.001, 'lr_schedule':'linear', 'kfac_update':1}
     parser = argparse.ArgumentParser("Train an RL Agent")
     parser.add_argument("-rn", "--run_name", required=True)
     parser.add_argument("-env", required=True, choices=ENVS.keys())

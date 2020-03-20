@@ -71,6 +71,36 @@ def compare_results(log_folders, names, title="Learning Curves", colors=["b", "g
     plt.title(title)
     plt.show()
 
+def mean_var_plots(log_folders, names, title="Learning Curves", colors=["b", "g", "r", "c", "m", "y", "k"]):
+    fig = plt.figure()
+    if len(log_folders) > 7 and len(log_folders) > len(colors):
+        print(log_folders)
+        print(colors)
+        print("Thats too many plots!\nTry 7 or less. Or try specifying a color for each plot.")
+        return
+
+    used_colors=[]
+    for i in range(len(log_folders)):
+        y_mat = []
+        for directory_name in os.listdir(log_folders[i]):
+            if directory_name.endswith("monitor_dir"):
+                x, y = ts2xy(load_results(os.path.join(log_folders[i], directory_name)), 'timesteps')
+                y_mat.append(y)
+
+        assert len(y_mat) != 0, "found no directories ending in 'monitor_dir' in " + log_folders[i]
+        y_mat = np.vstack(y_mat)
+        mean = np.mean(y_mat, axis=0)
+        std = np.std(y_mat, axis=0)
+        plt.plot(x, mean, colors[i]+"-", label=names[i])
+        plt.fill_between(x, mean + std/2, mean - std/2, color=colors[i], alpha=0.3)
+
+    plt.legend()
+    plt.ticklabel_format(style='sci', axis='both', scilimits=(0,0))
+    plt.xlabel('Number of Timesteps')
+    plt.ylabel('Rewards')
+    plt.title(title)
+    plt.show()
+
 if __name__ == "__main__":
     matplotlib.rc('font', size=16)
     parser = argparse.ArgumentParser("Function for plotting learning curves for saved logs of RL rollouts.")
@@ -78,6 +108,7 @@ if __name__ == "__main__":
     parser.add_argument("-rn", "--run_names", nargs="+", help="<required> Set flag", required=True)
     parser.add_argument("-c", "--colors", nargs="+", help="<required> Set flag", required=True, default=["b", "g", "r", "c", "m", "y", "k"])
     parser.add_argument("-t", "--title", help="title of plot", required=False, default="Learning Curves")
+    parser.add_argument("-mean_var", help="mean and variance plots", required=False, default=None)
     args = parser.parse_args()
 
     log_dirs = args.log_dirs
@@ -96,7 +127,10 @@ if __name__ == "__main__":
         for i in range(len(log_dirs)):
             log_dirs[i] = os.path.join(top_dir, log_dirs[i])
             names[i] = names[i].replace('_', ' ')
-        compare_results(log_folders=log_dirs, names=names, title=title, colors=colors)
+        if args.mean_var is not None:
+            mean_var_plots(log_folders=log_dirs, names=names, title=title, colors=colors)
+        else:
+            compare_results(log_folders=log_dirs, names=names, title=title, colors=colors)
 
 # if __name__ == "__main__":
 #     try:

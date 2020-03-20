@@ -37,9 +37,9 @@ ENVS = {
 def create_env(n_envs, eval_env=False):
     global env_name
     return VecNormalize(make_vec_env(ENVS[env_name][env_id], n_envs=n_envs, env_kwargs=ENVS[env_name][env_kwargs], monitor_dir=log_dir), norm_obs=False, norm_reward=True)
-    
-def create_env(n_envs, eval_env=False, env_name=None, log_dir=None):
-    return VecNormalize(make_vec_env(ENVS[env_name][env_id], n_envs=n_envs, env_kwargs=ENVS[env_name][env_kwargs], monitor_dir=log_dir), norm_obs=False, norm_reward=True)
+
+# def create_env(n_envs, eval_env=False, env_name=None, log_dir=None):
+#     return VecNormalize(make_vec_env(ENVS[env_name][env_id], n_envs=n_envs, env_kwargs=ENVS[env_name][env_kwargs], monitor_dir=log_dir), norm_obs=False, norm_reward=True)
 
 # def env_fn(n_envs, eval_env):
 #     global env_name
