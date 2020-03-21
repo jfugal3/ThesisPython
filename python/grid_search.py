@@ -75,6 +75,7 @@ if __name__ == "__main__":
         hyperparam_log_dir = os.path.join(top_log_dir, hyper_file_name(hyperparams))
         os.makedirs(hyperparam_log_dir, exist_ok=True)
         print("Beginning test", test_num, "of", len(hyperparams_list))
+        begin_perm_time = datetime.now()
         for i in range(5):
             run_dir = os.path.join(hyperparam_log_dir, "run_" + str(i) + "_monitor_dir")
             hyperparamfilename = os.path.join(run_dir, "hyperparams.txt")
@@ -93,7 +94,7 @@ if __name__ == "__main__":
             hyperparamfile.write("\nn_envs = {}\n".format(n_envs))
             hyperparamfile.write("RLAgent = {}\n".format(RLAgent))
             hyperparamfile.close()
-
+        print("time remaining:", (datetime.now() - begin_perm_time) * (len(hyperparams_list) - test_num))
         test_num += 1
             # env.save("trained_agents/env_" + run_name)
             #

@@ -3,12 +3,12 @@ import os
 
 def get_small_grid_A2C_ACKTR():
     grid = {
-        'gamma': [0.95, 0.99, 0.999],
-        'n_steps': [16, 64, 256, 1024],
-        'lr_schedule': ['linear', 'constant'],
-        'lr': [1e0, 1e-1, 1e-2, 1e-3, 1e-4, 1e-5],
-        'ent_coef': [1e-7, 1e-5, 1e-3, 1e-1],
-        'vf_coef': [0.2, 0.4, 0.6, 0.8]}
+        'gamma': [0.99],
+        'n_steps': [32],
+        'lr_schedule': ['linear', 'constant', 'double_middle_drop'],
+        'lr': [0.3, 0.12, 0.05, 0.02],
+        'ent_coef':  [0.0, 0.001, 0.01, 0.1],
+        'vf_coef':  [0.25, 0.5, 0.75, 1.0] }
 
     max_grad_norm = 0.5
     kfac_clip = 0.001

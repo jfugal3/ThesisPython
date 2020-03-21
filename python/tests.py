@@ -6,7 +6,7 @@ import generatePatternedTrajectories
 from my_panda_free_space_traj import myPandaFreeSpaceTraj
 import controllers
 import data_calc
-import ikpy_panda_kinematics
+# import ikpy_panda_kinematics
 import matplotlib.pyplot as plt
 import sys
 import time
@@ -774,7 +774,10 @@ def test_create_env_1goal_ee_PD_cont():
     env = myPandaIKWrapper3D(has_renderer=True)
     env.reset()
     total_reward = 0
-    for i in range(1000):
+    ee_pos = np.array(env.sim.data.body_xpos[env.sim.model.body_name2id('right_hand')])
+    dist = np.linalg.norm(ee_pos[:3] - env.via_points[env.next_idx][1:])
+    print(dist)
+    for i in range(50):
         action = helperFun.normalize_sym(np.array([0.6, -0.2, 0.4]), env.action_low, env.action_high)
         obs, reward, done, info = env.step(action)
         total_reward += reward
@@ -782,7 +785,10 @@ def test_create_env_1goal_ee_PD_cont():
         if i % 1000 == 0:
             print(action)
     print("reward =",total_reward)
-    print(np.array(env.sim.data.body_xpos[env.sim.model.body_name2id('right_hand')]))
+    # print(np.array(env.sim.data.body_xpos[env.sim.model.body_name2id('right_hand')]))
+    ee_pos = np.array(env.sim.data.body_xpos[env.sim.model.body_name2id('right_hand')])
+    dist = np.linalg.norm(ee_pos[:3] - env.via_points[env.next_idx][1:])
+    print(dist)
 
 TEST_MAP = {
 'test_generatePatternVel' : test_generatePatternVel,

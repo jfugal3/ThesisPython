@@ -1,0 +1,1 @@
+Logging to training_logs/delete_me/ent_coef-0.1__gamma-0.99__kfac_clip-0.001__learning_rate-0.0001__lr_schedule-constant__max_grad_norm-0.5__n_steps-16__vf_coef-0.4__vf_fisher_coef-1.0/run_1_monitor_dir
