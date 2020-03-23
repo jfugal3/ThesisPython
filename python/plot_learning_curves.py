@@ -101,14 +101,48 @@ def mean_var_plots(log_folders, names, title="Learning Curves", colors=["b", "g"
     plt.title(title)
     plt.show()
 
+def grid_analysis(log_folder):
+    fig = plt.figure()
+    log_folders = os.listdir(log_folder)
+    x_arr = []
+    y_arr = []
+    e_arr = []
+    for i in range(len(log_folders)):
+        y_mat = []
+        for directory_name in os.listdir(os.path.join(log_folder,log_folders[i])):
+            if directory_name.endswith("monitor_dir"):
+                x, y = ts2xy(load_results(os.path.join(log_folder,log_folders[i], directory_name)), 'timesteps')
+                y_mat.append(y)
+
+        assert len(y_mat) != 0, "found no directories ending in 'monitor_dir' in " + log_folders[i]
+        y_mat = np.vstack(y_mat)
+        y_mean = np.mean(y_mat)
+        y_std = np.std(np.mean(y_mat,0))
+        x_arr.append(i+1)
+        y_arr.append(y_mean)
+        e_arr.append(y_std/2)
+    max_mean_index = np.where(y_arr == np.amax(y_arr))[0][0]
+    print(max_mean_index)
+    plt.errorbar(x_arr, y_arr, e_arr, fmt='.', capsize=3)
+    plt.errorbar(x_arr[max_mean_index], y_arr[max_mean_index], e_arr[max_mean_index], fmt='r.', capsize=3)
+    # plt.fill_between(x, mean + std/2, mean - std/2, color=colors[i], alpha=0.3)
+
+    # plt.legend()
+    plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
+    plt.xlabel('Hyper Parameter Permutation')
+    plt.ylabel('Area Under the Learning Curve')
+    plt.title('Grid Search Results')
+    plt.show()
+
 if __name__ == "__main__":
     matplotlib.rc('font', size=16)
     parser = argparse.ArgumentParser("Function for plotting learning curves for saved logs of RL rollouts.")
     parser.add_argument("-ld", "--log_dirs", nargs="+", help="<required> Set flag", required=True)
     parser.add_argument("-rn", "--run_names", nargs="+", help="<required> Set flag", required=True)
-    parser.add_argument("-c", "--colors", nargs="+", help="<required> Set flag", required=True, default=["b", "g", "r", "c", "m", "y", "k"])
+    parser.add_argument("-c", "--colors", nargs="+", help="<required> Set flag", required=False, default=["default"])
     parser.add_argument("-t", "--title", help="title of plot", required=False, default="Learning Curves")
     parser.add_argument("-mean_var", help="mean and variance plots", required=False, default=None)
+    parser.add_argument("-grid_analysis", help="analyze grid search results", required=False, default=None)
     args = parser.parse_args()
 
     log_dirs = args.log_dirs
@@ -129,6 +163,8 @@ if __name__ == "__main__":
             names[i] = names[i].replace('_', ' ')
         if args.mean_var is not None:
             mean_var_plots(log_folders=log_dirs, names=names, title=title, colors=colors)
+        elif args.grid_analysis is not None:
+            grid_analysis(log_dirs[0])
         else:
             compare_results(log_folders=log_dirs, names=names, title=title, colors=colors)
 

@@ -1,0 +1,1 @@
+Logging to training_logs/perfect_grav_comp_grid_search/ent_coef-0.01__gamma-0.99__kfac_clip-0.001__learning_rate-0.12__lr_schedule-constant__max_grad_norm-0.5__n_steps-32__vf_coef-0.75__vf_fisher_coef-1.0/run_0_monitor_dir

@@ -59,6 +59,7 @@ class myPandaFreeSpace1Goal(superclass, gym.Env):
             high=np.ones(14),
             dtype=np.float32
         )
+        self.horizon = 500
 
 
     def _place_points(self):

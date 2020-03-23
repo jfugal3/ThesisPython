@@ -19,6 +19,7 @@ import numpy as np
 from datetime import datetime
 import pandas as pd
 import sys
+import gc
 
 best_mean_reward, n_steps = -np.inf, 0
 def callback(_locals, _globals):
@@ -89,6 +90,9 @@ if __name__ == "__main__":
             env = create_env(n_envs=n_envs, env_name=env_name, log_dir=run_dir)
             model = RLAgent('MlpPolicy', env, verbose=0, **hyperparams).learn(total_timesteps=timesteps, callback=callback)
             model.save(run_dir + "final_agent.pkl")
+            del model
+            del env
+            gc.collect()
             hyperparamfile = open(hyperparamfilename, 'w')
             hyperparamfile.write(str(hyperparams))
             hyperparamfile.write("\nn_envs = {}\n".format(n_envs))

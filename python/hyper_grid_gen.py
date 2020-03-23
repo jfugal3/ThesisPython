@@ -40,7 +40,7 @@ if __name__ == "__main__":
     print("list size", len(hyperparam_list))
     dir_name = "hyperparamlists_ACKTR"
     os.makedirs(dir_name, exist_ok=True)
-    partition = np.linspace(0, len(hyperparam_list), 11, dtype=int)
+    partition = np.linspace(0, len(hyperparam_list), 13, dtype=int)
     for i in range(len(partition) - 1):
         segment = hyperparam_list[partition[i]:partition[i + 1]]
         np.save(os.path.join(dir_name, "list_" + str(i + 1)), segment)

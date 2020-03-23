@@ -1,0 +1,3 @@
+{'gamma': 0.99, 'max_grad_norm': 0.5, 'vf_fisher_coef': 1.0, 'ent_coef': 0.01, 'lr_schedule': 'constant', 'learning_rate': 0.12, 'kfac_clip': 0.001, 'vf_coef': 0.75, 'n_steps': 32}
+n_envs = 4
+RLAgent = <class 'stable_baselines.acktr.acktr.ACKTR'>
