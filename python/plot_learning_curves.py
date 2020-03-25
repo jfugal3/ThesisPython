@@ -107,27 +107,55 @@ def grid_analysis(log_folder):
     x_arr = []
     y_arr = []
     e_arr = []
+    h_arr = []
     for i in range(len(log_folders)):
         y_mat = []
         for directory_name in os.listdir(os.path.join(log_folder,log_folders[i])):
             if directory_name.endswith("monitor_dir"):
                 x, y = ts2xy(load_results(os.path.join(log_folder,log_folders[i], directory_name)), 'timesteps')
                 y_mat.append(y)
+                # print(len(x))
 
         assert len(y_mat) != 0, "found no directories ending in 'monitor_dir' in " + log_folders[i]
         y_mat = np.vstack(y_mat)
         y_mean = np.mean(y_mat)
         y_std = np.std(np.mean(y_mat,0))
-        x_arr.append(i+1)
         y_arr.append(y_mean)
         e_arr.append(y_std/2)
-    max_mean_index = np.where(y_arr == np.amax(y_arr))[0][0]
-    print(max_mean_index)
-    plt.errorbar(x_arr, y_arr, e_arr, fmt='.', capsize=3)
-    plt.errorbar(x_arr[max_mean_index], y_arr[max_mean_index], e_arr[max_mean_index], fmt='r.', capsize=3)
-    # plt.fill_between(x, mean + std/2, mean - std/2, color=colors[i], alpha=0.3)
+        h_arr.append(log_folders[i])
 
-    # plt.legend()
+    yeh = zip(y_arr, e_arr, h_arr)
+    y_sort = []
+    x_sort = []
+    e_sort = []
+    h_sort = []
+    i = 1
+    for y, e, h in reversed(sorted(yeh)):
+        y_sort.append(y)
+        x_sort.append(i)
+        e_sort.append(e)
+        h_sort.append(h)
+        i += 1
+    out_file_name = "output.txt"
+    f = open(out_file_name, "w")
+    f.write(",")
+    for key_val in h_sort[0].split("__"):
+        f.write(key_val.split("-")[0] + ",")
+    f.write("\n")
+    i = 1
+    for hyperparams in h_sort:
+        f.write(str(i) + ",")
+        for key_val in hyperparams.split("__"):
+            f.write(str(key_val.split("-")[1]) + ",")
+        f.write(str(np.around(y_sort[i-1],2)) + "," + str(np.around(e_sort[i-1] * 2, 2)) + ",")
+        f.write("\n")
+        i += 1
+    f.close()
+    max_mean_index = np.where(y_sort == np.amax(y_sort))[0][0]
+    print("Writing output to " + out_file_name)
+    plt.errorbar(x_sort, y_sort, e_sort, fmt='.', capsize=3)
+    plt.errorbar(x_sort[max_mean_index], y_sort[max_mean_index], e_sort[max_mean_index], fmt='r.', capsize=3)
+
     plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
     plt.xlabel('Hyper Parameter Permutation')
     plt.ylabel('Area Under the Learning Curve')
@@ -167,74 +195,3 @@ if __name__ == "__main__":
             grid_analysis(log_dirs[0])
         else:
             compare_results(log_folders=log_dirs, names=names, title=title, colors=colors)
-
-# if __name__ == "__main__":
-#     try:
-#         log_dir_index = -1
-#         run_name_index = -1
-#         colors_index = -1
-#         for i in range(len(sys.argv)):
-#             # print(sys.argv[i][0:len('log_dirs=')])
-#             # print(sys.argv[i][0:len('run_names=')])
-#             # print(sys.argv[i][0:len('colors=')])
-#             # print(type(sys.argv[i][0:len('colors=')]))
-#
-#             if sys.argv[i][0:len('log_dirs=')] == 'log_dirs=':
-#                 log_dir_index = i
-#             if sys.argv[i][0:len('run_names=')] == 'run_names=':
-#                 run_name_index = i
-#             if sys.argv[i][0:len('colors=')] == 'colors=':
-#                 colors_index = i
-#
-#         # print(log_dir_index)
-#         # print(run_name_index)
-#         # print(colors_index)
-#
-#         if log_dir_index == -1 or run_name_index == -1:
-#             raise StringException("Usage: log_dirs=<comma separated log dirs> run_names=<comma separated run names> colors=<comma separated color initials (optional)>")
-#
-#
-#         log_dirs = sys.argv[log_dir_index][len('log_dirs='):].split(',')
-#         names = sys.argv[run_name_index][len('run_names='):].split(',')
-#         if colors_index != -1:
-#             colors = sys.argv[colors_index][len('colors='):].split(',')
-#         else:
-#             colors = None
-#
-#         if len(log_dirs) != len(names) or len(names) != len(colors) and colors is not None:
-#             raise StringException("Length of lists must be equal.\n" + str(log_dirs) + "\n" + str(names) + "\n" + str(colors))
-#
-#         top_dir = "training_logs/"
-#         for i in range(len(log_dirs)):
-#             log_dirs[i] = top_dir + log_dirs[i]
-#             names[i] = names[i].replace('_',' ')
-#         print("colors:",colors)
-#         if colors is not None:
-#             compare_results(log_folders=log_dirs, names=names, colors=colors)
-#         else:
-#             compare_results(log_folders=log_dirs, names=names)
-#
-#     except StringException as e:
-#         print(e.what())
-
-# if __name__ == "__main__":
-#     try:
-#         if len(sys.argv) < 2:
-#             raise StringException("Usage: training_logs/<list of log directory/run-name pairs>")
-#
-#         top_dir = "training_logs/"
-#         log_dirs = []
-#         names = []
-#         for i in range(int(len(sys.argv)/2)):
-#             log_dirs.append(top_dir + sys.argv[2 * i + 1])
-#             names.append(sys.argv[2 * i + 2].replace('_',' '))
-#         compare_results(log_dirs, names)
-#
-#     except StringException as e:
-#         print(e.what())
-
-
-# run_name = "A2C3_freespacetraj_noGravComp_g0"
-# log_dir = "training_logs/" + run_name + "/"
-# plot_results(log_dir, title="Free Space Trajectory: No Gravity Compensation")
-# results_plotter.plot_results([log_dir], 1e5, results_plotter.X_TIMESTEPS, "ACKTR_freespacetraj")
