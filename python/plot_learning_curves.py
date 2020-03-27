@@ -101,63 +101,86 @@ def mean_var_plots(log_folders, names, title="Learning Curves", colors=["b", "g"
     plt.title(title)
     plt.show()
 
-def grid_analysis(log_folder):
+def grid_analysis(log_dirs, names, sess_100_dirs=None, sess_names=None, colors=["b", "g", "r", "c", "m", "y", "k"]):
     fig = plt.figure()
-    log_folders = os.listdir(log_folder)
-    x_arr = []
-    y_arr = []
-    e_arr = []
-    h_arr = []
-    for i in range(len(log_folders)):
-        y_mat = []
-        for directory_name in os.listdir(os.path.join(log_folder,log_folders[i])):
-            if directory_name.endswith("monitor_dir"):
-                x, y = ts2xy(load_results(os.path.join(log_folder,log_folders[i], directory_name)), 'timesteps')
-                y_mat.append(y)
-                # print(len(x))
+    dir_num = 0
+    for log_folder in log_dirs:
+        log_folders = os.listdir(log_folder)
+        x_arr = []
+        y_arr = []
+        e_arr = []
+        h_arr = []
+        for i in range(len(log_folders)):
+            y_mat = []
+            for directory_name in os.listdir(os.path.join(log_folder,log_folders[i])):
+                if directory_name.endswith("monitor_dir"):
+                    x, y = ts2xy(load_results(os.path.join(log_folder,log_folders[i], directory_name)), 'timesteps')
+                    y_mat.append(y)
+                    # print(len(x))
 
-        assert len(y_mat) != 0, "found no directories ending in 'monitor_dir' in " + log_folders[i]
-        y_mat = np.vstack(y_mat)
-        y_mean = np.mean(y_mat)
-        y_std = np.std(np.mean(y_mat,0))
-        y_arr.append(y_mean)
-        e_arr.append(y_std/2)
-        h_arr.append(log_folders[i])
+            assert len(y_mat) != 0, "found no directories ending in 'monitor_dir' in " + log_folders[i]
+            y_mat = np.vstack(y_mat)
+            y_mean = np.mean(y_mat)
+            y_std = np.std(np.mean(y_mat,0))
+            y_arr.append(y_mean)
+            e_arr.append(y_std/2)
+            h_arr.append(log_folders[i])
 
-    yeh = zip(y_arr, e_arr, h_arr)
-    y_sort = []
-    x_sort = []
-    e_sort = []
-    h_sort = []
-    i = 1
-    for y, e, h in reversed(sorted(yeh)):
-        y_sort.append(y)
-        x_sort.append(i)
-        e_sort.append(e)
-        h_sort.append(h)
-        i += 1
-    out_file_name = "output.txt"
-    f = open(out_file_name, "w")
-    f.write(",")
-    for key_val in h_sort[0].split("__"):
-        f.write(key_val.split("-")[0] + ",")
-    f.write("\n")
-    i = 1
-    for hyperparams in h_sort:
-        f.write(str(i) + ",")
-        for key_val in hyperparams.split("__"):
-            f.write(str(key_val.split("-")[1]) + ",")
-        f.write(str(np.around(y_sort[i-1],2)) + "," + str(np.around(e_sort[i-1] * 2, 2)) + ",")
+        yeh = zip(y_arr, e_arr, h_arr)
+        y_sort = []
+        x_sort = []
+        e_sort = []
+        h_sort = []
+        i = 1 + dir_num * 0.5
+        for y, e, h in reversed(sorted(yeh)):
+            y_sort.append(y)
+            x_sort.append(i)
+            e_sort.append(e)
+            h_sort.append(h)
+            i += 1
+        out_file_name = "output{}.txt".format(dir_num)
+        f = open(out_file_name, "w")
+        f.write(",")
+        for key_val in h_sort[0].split("__"):
+            f.write(key_val.split("-")[0] + ",")
         f.write("\n")
-        i += 1
-    f.close()
-    max_mean_index = np.where(y_sort == np.amax(y_sort))[0][0]
-    print("Writing output to " + out_file_name)
-    plt.errorbar(x_sort, y_sort, e_sort, fmt='.', capsize=3)
-    plt.errorbar(x_sort[max_mean_index], y_sort[max_mean_index], e_sort[max_mean_index], fmt='r.', capsize=3)
+        i = 1
+        for hyperparams in h_sort:
+            f.write(str(i) + ",")
+            for key_val in hyperparams.split("__"):
+                f.write(str(key_val.split("-")[1]) + ",")
+            f.write(str(np.around(y_sort[i-1],2)) + "," + str(np.around(e_sort[i-1] * 2, 2)) + ",")
+            f.write("\n")
+            i += 1
+        f.close()
+        max_mean_index = np.where(y_sort == np.amax(y_sort))[0][0]
+        print("Writing output to " + out_file_name)
+        plt.errorbar(x_sort, y_sort, e_sort, fmt='.', capsize=3, label=names[dir_num], color=colors[dir_num])
+        # plt.errorbar(x_sort[max_mean_index], y_sort[max_mean_index], e_sort[max_mean_index], fmt='r.', capsize=3)
+        dir_num += 1
+    print("sess_100_dirs", sess_100_dirs)
+    if sess_100_dirs is not None:
+        sess_num = 0.0
+        for i in range(len(sess_100_dirs)):
+            y_mat = []
+            for directory_name in os.listdir(sess_100_dirs[i]):
+                if directory_name.endswith("monitor_dir"):
+                    x, y = ts2xy(load_results(os.path.join(sess_100_dirs[i], directory_name)), 'timesteps')
+                    y_mat.append(y)
+                    # print(len(x))
 
+            assert len(y_mat) != 0, "found no directories ending in 'monitor_dir' in " + log_folders[i]
+            y_mat = np.vstack(y_mat)
+            y_mean = np.mean(y_mat)
+            y_std = np.std(np.mean(y_mat,0))
+            sess_num += 0.5
+            plt.errorbar(sess_num, y_mean, y_std / 2, fmt='.', capsize=3, label=sess_names[i])
+
+    plt.legend()
+    # plt.locator_params(nbins=4)
+    plt.xlim([0, 193])
     plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
-    plt.xlabel('Hyper Parameter Permutation')
+    plt.xlabel('Hyper Parameter Permutation Ranking')
     plt.ylabel('Area Under the Learning Curve')
     plt.title('Grid Search Results')
     plt.show()
@@ -171,6 +194,8 @@ if __name__ == "__main__":
     parser.add_argument("-t", "--title", help="title of plot", required=False, default="Learning Curves")
     parser.add_argument("-mean_var", help="mean and variance plots", required=False, default=None)
     parser.add_argument("-grid_analysis", help="analyze grid search results", required=False, default=None)
+    parser.add_argument("-sess_100_dirs", nargs="+", help="dirs for grid_analysis", required=False, default=None)
+    parser.add_argument("-sess_names", nargs="+", help="names for sess_100_dirs", required=False, default=None)
     args = parser.parse_args()
 
     log_dirs = args.log_dirs
@@ -192,6 +217,9 @@ if __name__ == "__main__":
         if args.mean_var is not None:
             mean_var_plots(log_folders=log_dirs, names=names, title=title, colors=colors)
         elif args.grid_analysis is not None:
-            grid_analysis(log_dirs[0])
+            if args.sess_100_dirs is not None:
+                for i in range(len(args.sess_100_dirs)):
+                    args.sess_100_dirs[i] = os.path.join(top_dir, args.sess_100_dirs[i])
+            grid_analysis(log_dirs, names, args.sess_100_dirs, args.sess_names)
         else:
             compare_results(log_folders=log_dirs, names=names, title=title, colors=colors)

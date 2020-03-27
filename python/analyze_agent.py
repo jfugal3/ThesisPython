@@ -12,8 +12,23 @@ from helperFun import grav_options
 import sys
 import pprint
 import matplotlib.pyplot as plt
+import matplotlib
+
+def bin(x, bin_num, low=-1, high=1):
+    bin_edges = np.linspace(low,high, bin_num+1)
+    out = np.zeros(bin_num)
+    for val in x:
+        for i in range(bin_num):
+            if bin_edges[i] <= val <= bin_edges[i+1]:
+                out[i] += 1
+                continue
+
+    centers = bin_edges[:-1] + (bin_edges[1] - bin_edges[0])/2
+    out = out / len(x)
+    return centers, out
 
 if __name__ == "__main__":
+    matplotlib.rc('font', size=13)
     try:
         if len(sys.argv) < 3:
             raise StringException("Usage: training_logs/<path to agent model> <grav-option>")
@@ -32,7 +47,7 @@ if __name__ == "__main__":
         ## Play Agent
         history = {'obs':[], 'action':[], 'reward':[]}
         pp = pprint.PrettyPrinter()
-        for i in range(1):
+        for i in range(10):
             obs = env.reset()
             count = 0
             done = False
@@ -50,7 +65,65 @@ if __name__ == "__main__":
                 #     pp.pprint(action)
                 #     print("Joint State")
                 #     pp.pprint(obs[:7])
-        history['obs'] = np.stack(history['obs'], axis=1)
-        print(history['obs'].shape)
+        history['obs'] = np.vstack(history['obs'])
+        history['action'] = np.vstack(history['action'])
+        history['reward'] = np.vstack(history['reward'])
+        print(history['action'].shape)
+        for i in range(7):
+            plt.figure(1)
+            plt.subplot(2,4, i + 1)
+            x,y = bin(history['action'][:,i], 10)
+            plt.bar(x,y, width=0.2)
+            plt.ylim([0,1])
+            plt.title('Joint {}'.format(i+1))
+            if i in [3,4,5,6]:
+                plt.xlabel('Normalize Joint Torque')
+            if i in [0,4]:
+                plt.ylabel('Density')
+
+            plt.figure(2)
+            plt.subplot(2,4, i + 1)
+            # plt.figure()
+            x,y = bin(history['obs'][:,i], 10, low=-0.05, high=1.05)
+            plt.bar(x,y, width=0.1)
+            plt.title('Joint {}'.format(i+1))
+            if i in [3,4,5,6]:
+                plt.xlabel('Normalized Joint Angle')
+            if i in [0,4]:
+                plt.ylabel('Density')
+
+        # plt.subplot(1,7,2)
+        # x,y = bin(history['action'][:,1], 10)
+        # plt.bar(x,y, width=0.2)
+        # plt.ylim([0,1])
+        #
+        # plt.subplot(1,7,3)
+        # x,y = bin(history['action'][:,2], 10)
+        # plt.bar(x,y, width=0.2)
+        # plt.ylim([0,1])
+        #
+        # plt.subplot(1,7,4)
+        # x,y = bin(history['action'][:,3], 10)
+        # plt.bar(x,y, width=0.2)
+        # plt.ylim([0,1])
+        #
+        # plt.subplot(1,7,5)
+        # x,y = bin(history['action'][:,4], 10)
+        # plt.bar(x,y, width=0.2)
+        # plt.ylim([0,1])
+        #
+        # plt.subplot(1,7,6)
+        # x,y = bin(history['action'][:,5], 10)
+        # plt.bar(x,y, width=0.2)
+        # plt.ylim([0,1])
+        #
+        # plt.subplot(1,7,7)
+        # x,y = bin(history['action'][:,6], 10)
+        # plt.bar(x,y, width=0.2)
+        # plt.ylim([0,1])
+        # plt.subplot(1,7,4)
+        # plt.title('Action Distribution')
+        plt.show()
+        # print(history['obs'].shape)
     except StringException as e:
         print(e.what())
