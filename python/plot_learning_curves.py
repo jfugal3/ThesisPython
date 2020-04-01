@@ -196,6 +196,7 @@ if __name__ == "__main__":
     parser.add_argument("-grid_analysis", help="analyze grid search results", required=False, default=None)
     parser.add_argument("-sess_100_dirs", nargs="+", help="dirs for grid_analysis", required=False, default=None)
     parser.add_argument("-sess_names", nargs="+", help="names for sess_100_dirs", required=False, default=None)
+    parser.add_argument("-path", help="add path to log dirs", required=False, default="training_logs")
     args = parser.parse_args()
 
     log_dirs = args.log_dirs
@@ -210,7 +211,7 @@ if __name__ == "__main__":
         print("len(run_names) =", len(names))
         print("len(colors) =", len(colors))
     else:
-        top_dir = "training_logs"
+        top_dir = args.path
         for i in range(len(log_dirs)):
             log_dirs[i] = os.path.join(top_dir, log_dirs[i])
             names[i] = names[i].replace('_', ' ')

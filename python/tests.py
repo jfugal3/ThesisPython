@@ -790,6 +790,34 @@ def test_create_env_1goal_ee_PD_cont():
     dist = np.linalg.norm(ee_pos[:3] - env.via_points[env.next_idx][1:])
     print(dist)
 
+def test_home_position():
+    env = my_panda_free_space_1goal.myPandaFreeSpace1Goal(has_renderer=True, grav_option=grav_options['perfect_comp'])
+    env.control_timestep = env.model_timestep
+    print(int(env.control_timestep/env.model_timestep))
+    done = False
+    # obs = env.reset()
+    # obs = helperFun.unnormalize(obs, env.obs_low, env.obs_high)
+    # q, qd = obs[:7], obs[7:]
+    # action = controllers.PDControl(q=q, qd=qd, qgoal=env.home_pose)
+    # action = helperFun.normalize_sym(action, env.action_low, env.action_high)
+    for i in range(4000):
+        # state = env.sim.get_state()
+        # q, qd = state[1][:7], state[2][:7]
+        # action = controllers.PDControl(q=q, qd=qd, qgoal=env.home_pose)
+        obs = env.unpack_obs()
+        obs = helperFun.unnormalize(obs, env.obs_low, env.obs_high)
+        q, qd = obs[:7], obs[7:]
+        action2 = controllers.PDControl(q=q, qd=qd, qgoal=env.home_pose)
+        action2 = helperFun.normalize_sym(action2, env.action_low, env.action_high)
+        # print("action 1:",np.around(action,2))
+        # print("action 2:",np.around(action2,2))
+        env.step(action2)
+        # env.sim.data.ctrl[:7] = action2
+        # env.sim.step()
+        # obs, rewad, done, info = env.step(action)
+        # action = helperFun.normalize_sym(action, env.action_low, env.action_high)
+        env.render()
+
 TEST_MAP = {
 'test_generatePatternVel' : test_generatePatternVel,
 'test_getBoundViolations' : test_getBoundViolations,
@@ -816,7 +844,8 @@ TEST_MAP = {
 'test_normalize_unnormalize' : test_normalize_unnormalize,
 'test_normalize_unnormalize_sym' : test_normalize_unnormalize_sym,
 'test_my_panda_lift' : test_my_panda_lift,
-'test_create_env_1goal_ee_PD_cont': test_create_env_1goal_ee_PD_cont
+'test_create_env_1goal_ee_PD_cont': test_create_env_1goal_ee_PD_cont,
+'test_home_position': test_home_position
 }
 
 

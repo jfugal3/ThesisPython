@@ -93,28 +93,37 @@ if __name__ == "__main__":
     #
     #     if grav_option not in grav_options:
     #         raise StringException(grav_option + "is not a valid gravity option." + "\nValid options:\n" + str(grav_options))
-    kwargs = {'gamma':0.99, 'n_steps':20, 'ent_coef':0.01, 'vf_coef':0.25, 'vf_fisher_coef':1.0, 'learning_rate':1.00000000e-05, 'max_grad_norm':0.5, 'kfac_clip':0.001, 'lr_schedule':'linear', 'kfac_update':1}
+    ACKTR_kwargs = {'gamma':0.99, 'n_steps':32, 'ent_coef':0.001, 'vf_coef':0.75, 'vf_fisher_coef':1.0, 'learning_rate':0.05, 'max_grad_norm':0.5, 'kfac_clip':0.001, 'lr_schedule':'constant', 'kfac_update':1}
+    A2C_kwargs = {'gamma':0.99, 'n_steps':32, 'ent_coef':0.001, 'vf_coef':0.25, 'learning_rate':0.0007, 'max_grad_norm':0.5, 'lr_schedule':'constant', 'alpha':0.99, 'epsilon':1e-5}
+
+    AGENTS_MAP = {"A2C": A2C, "ACKTR": ACKTR}
+    kwargs_map = {"A2C": A2C_kwargs, "ACKTR": ACKTR_kwargs}
+
     parser = argparse.ArgumentParser("Train an RL Agent")
     parser.add_argument("-rn", "--run_name", required=True)
     parser.add_argument("-env", required=True, choices=ENVS.keys())
-    parser.add_argument("-n_envs", type=int, required=False, default=1)
+    parser.add_argument("-n_envs", type=int, required=False, default=4)
     parser.add_argument("-ts", "--timesteps", type=int, help="number of timesteps to run each training session", required=False, default=int(5e5))
     parser.add_argument("--rendering", type=bool, required=False, default=False)
     parser.add_argument("-lr", type=float, required=True)
-    parser.add_argument("-mgn", "--max_grad_norm", type=float, required=False, default=kwargs["max_grad_norm"])
-    parser.add_argument("-kfac_clip", type=float, required=False, default=kwargs["kfac_clip"])
-    parser.add_argument("-vf_coef", type=float, required=False, default=kwargs["vf_coef"])
-    parser.add_argument("-ent_coef", type=float, required=False, default=kwargs["ent_coef"])
+    # parser.add_argument("-mgn", "--max_grad_norm", type=float, required=False, default=kwargs["max_grad_norm"])
+    # parser.add_argument("-kfac_clip", type=float, required=False, default=kwargs["kfac_clip"])
+    # parser.add_argument("-vf_coef", type=float, required=False, default=kwargs["vf_coef"])
+    # parser.add_argument("-ent_coef", type=float, required=False, default=kwargs["ent_coef"])
+    # parser.add_argument("-n_steps", type=int, required=False, default=kwargs["n_steps"])
+    parser.add_argument("-agent", type=str, required=True, choices=["A2C", "ACKTR"])
     args = parser.parse_args()
     rendering = args.rendering
     total_timesteps = args.timesteps
     run_name = args.run_name
     lr = args.lr
+    kwargs = kwargs_map[args.agent]
     kwargs['learning_rate'] = lr
-    kwargs['max_grad_norm'] = args.max_grad_norm
-    kwargs['kfac_clip'] = args.kfac_clip
-    kwargs['vf_coef'] = args.vf_coef
-    kwargs['ent_coef'] = args.ent_coef
+    # kwargs['max_grad_norm'] = args.max_grad_norm
+    # kwargs['kfac_clip'] = args.kfac_clip
+    # kwargs['vf_coef'] = args.vf_coef
+    # kwargs['ent_coef'] = args.ent_coef
+    # kwargs['n_steps'] = args.n_steps
 
     start_time = datetime.now()
 
@@ -125,7 +134,7 @@ if __name__ == "__main__":
     logger.configure(log_dir)
 
     env = create_env(n_envs=args.n_envs, env_name=args.env, log_dir=log_dir)
-    RLAgent = ACKTR
+    RLAgent = AGENTS_MAP[args.agent]
     hyperparamfilename = os.path.join(log_dir, "hyperparams.txt")
     hyperparamfile = open(hyperparamfilename, 'w')
     hyperparamfile.write(str(kwargs))

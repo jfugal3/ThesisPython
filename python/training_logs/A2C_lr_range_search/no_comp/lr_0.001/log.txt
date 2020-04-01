@@ -1,0 +1,9 @@
+Logging to training_logs/A2C_lr_range_search/no_comp/lr_0.001
+---------------------------------
+| explained_variance | -0.00258 |
+| fps                | 174      |
+| nupdates           | 1        |
+| policy_entropy     | 9.93     |
+| total_timesteps    | 128      |
+| value_loss         | 8.97     |
+---------------------------------
