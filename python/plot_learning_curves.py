@@ -89,22 +89,22 @@ def mean_var_plots(log_folders, names, title="Learning Curves", colors=["b", "g"
             if directory_name.endswith("monitor_dir"):
                 x, y = ts2xy(load_results(os.path.join(log_folders[i], directory_name)), 'timesteps')
                 y_mat.append(y)
-                # if i != change:
-                #     plt.plot(x,y,color=colors[i], marker='.', ls='', alpha=0.1, label=names[i])
-                # else:
-                #     plt.plot(x,y,color=colors[i], marker='.', ls='', alpha=0.1)
-                # change = i
+                if i != change:
+                    plt.plot(x,y,color=colors[i], marker='.', ls='', alpha=0.1, label=names[i])
+                else:
+                    plt.plot(x,y,color=colors[i], marker='.', ls='', alpha=0.1)
+                change = i
 
-        assert len(y_mat) != 0, "found no directories ending in 'monitor_dir' in " + log_folders[i]
-        y_mat = np.vstack(y_mat)
-        mean = np.mean(y_mat, axis=0)
-        std = np.std(y_mat, axis=0)
-        plt.plot(x, mean, color=colors[i], ls="-", label=names[i])
-        plt.fill_between(x, mean + std/2, mean - std/2, color=colors[i], alpha=0.3)
+        # assert len(y_mat) != 0, "found no directories ending in 'monitor_dir' in " + log_folders[i]
+        # y_mat = np.vstack(y_mat)
+        # mean = np.mean(y_mat, axis=0)
+        # std = np.std(y_mat, axis=0)
+        # plt.plot(x, mean, color=colors[i], ls="-", label=names[i])
+        # plt.fill_between(x, mean + std/2, mean - std/2, color=colors[i], alpha=0.3)
     plt.legend()
     plt.ticklabel_format(style='sci', axis='both', scilimits=(0,0))
     plt.xlabel('Number of Timesteps')
-    plt.xlim([0,200000])
+    plt.xlim([0,500000])
     plt.ylabel('Rewards')
     plt.title(title)
     plt.show()
