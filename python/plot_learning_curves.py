@@ -89,22 +89,22 @@ def mean_var_plots(log_folders, names, title="Learning Curves", colors=["b", "g"
             if directory_name.endswith("monitor_dir"):
                 x, y = ts2xy(load_results(os.path.join(log_folders[i], directory_name)), 'timesteps')
                 y_mat.append(y)
-                if i != change:
-                    plt.plot(x,y,color=colors[i], marker='.', ls='', alpha=0.1, label=names[i])
-                else:
-                    plt.plot(x,y,color=colors[i], marker='.', ls='', alpha=0.1)
-                change = i
+                # if i != change:
+                #     plt.plot(x,y,color=colors[i], marker='.', ms=2, ls='', alpha=0.2, label=names[i])
+                # else:
+                #     plt.plot(x,y,color=colors[i], marker='.', ms=2, ls='', alpha=0.2)
+                # change = i
 
-        # assert len(y_mat) != 0, "found no directories ending in 'monitor_dir' in " + log_folders[i]
-        # y_mat = np.vstack(y_mat)
-        # mean = np.mean(y_mat, axis=0)
-        # std = np.std(y_mat, axis=0)
-        # plt.plot(x, mean, color=colors[i], ls="-", label=names[i])
-        # plt.fill_between(x, mean + std/2, mean - std/2, color=colors[i], alpha=0.3)
+        assert len(y_mat) != 0, "found no directories ending in 'monitor_dir' in " + log_folders[i]
+        y_mat = np.vstack(y_mat)
+        mean = np.mean(y_mat, axis=0)
+        std = np.std(y_mat, axis=0)
+        plt.plot(x, mean, color=colors[i], ls="-", label=names[i])
+        plt.fill_between(x, mean + std/2, mean - std/2, color=colors[i], alpha=0.3)
     plt.legend()
     plt.ticklabel_format(style='sci', axis='both', scilimits=(0,0))
     plt.xlabel('Number of Timesteps')
-    plt.xlim([0,500000])
+    plt.xlim([0,200000])
     plt.ylabel('Rewards')
     plt.title(title)
     plt.show()
@@ -141,7 +141,7 @@ def grid_analysis(log_dirs, names, sess_100_dirs=None, sess_names=None, colors=[
                     # print(len(x))
 
             assert len(y_mat) != 0, "found no directories ending in 'monitor_dir' in " + log_folders[i]
-            y_mat = np.vstack(_format_arr_arr(y_mat))
+            y_mat = 130*500 - np.vstack(_format_arr_arr(y_mat))
             y_mean = np.mean(y_mat)
             y_std = np.std(np.mean(y_mat,0))
             y_arr.append(y_mean)
@@ -158,7 +158,7 @@ def grid_analysis(log_dirs, names, sess_100_dirs=None, sess_names=None, colors=[
         tr_sort = []
         td_sort = []
         i = 1 + dir_num * 0.5
-        for y, e, h, tr, td in reversed(sorted(yeh)):
+        for y, e, h, tr, td in sorted(yeh):
             y_sort.append(y)
             x_sort.append(i)
             e_sort.append(e)
@@ -166,7 +166,7 @@ def grid_analysis(log_dirs, names, sess_100_dirs=None, sess_names=None, colors=[
             tr_sort.append(tr)
             td_sort.append(td)
             i += 1
-        out_file_name = "{}_{}_auc.csv".format(title.replace(' ','_'),names[dir_num])
+        out_file_name = "{}_{}_regret.csv".format(title.replace(' ','_'),names[dir_num].replace(' ','_'))
         f = open(out_file_name, "w")
         f.write(",")
         for key_val in h_sort[0].split("__"):
@@ -247,7 +247,7 @@ def grid_analysis(log_dirs, names, sess_100_dirs=None, sess_names=None, colors=[
     plt.xlim([0, len(x_sort) + 1])
     plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
     plt.xlabel('Hyper Parameter Permutation Ranking')
-    plt.ylabel('Area Under the Learning Curve')
+    plt.ylabel('Regret')
     plt.title(title)
     #
     # plt.figure(1)
@@ -301,6 +301,6 @@ if __name__ == "__main__":
                     args.sess_100_dirs[i] = os.path.join(top_dir, args.sess_100_dirs[i])
             if title == "Learning Curves":
                 title = "Grid Search Analysis"
-            grid_analysis(log_dirs, names, args.sess_100_dirs, args.sess_names, title=title)
+            grid_analysis(log_dirs, names, args.sess_100_dirs, args.sess_names, title=title, colors=colors)
         else:
             compare_results(log_folders=log_dirs, names=names, title=title, colors=colors)
