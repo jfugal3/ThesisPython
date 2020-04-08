@@ -807,7 +807,7 @@ def test_home_position():
         obs = env.unpack_obs()
         obs = helperFun.unnormalize(obs, env.obs_low, env.obs_high)
         q, qd = obs[:7], obs[7:]
-        action2 = controllers.PDControl(q=q, qd=qd, qgoal=env.home_pose)
+        action2 = controllers.PDControl(q=q, qd=qd, qgoal=env.mujoco_robot.init_qpos)
         action2 = helperFun.normalize_sym(action2, env.action_low, env.action_high)
         # print("action 1:",np.around(action,2))
         # print("action 2:",np.around(action2,2))

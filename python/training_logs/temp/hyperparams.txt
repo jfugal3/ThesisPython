@@ -1,3 +1,0 @@
-{'n_steps': 20, 'max_grad_norm': 0.5, 'lr_schedule': 'linear', 'ent_coef': 0.01, 'kfac_update': 1, 'learning_rate': 0.1, 'vf_fisher_coef': 1.0, 'vf_coef': 0.25, 'gamma': 0.999, 'kfac_clip': 0.001}
-n_envs = 1
-RLAgent = <class 'stable_baselines.acktr.acktr.ACKTR'>

@@ -4,7 +4,7 @@ from my_panda_lift import myPandaLift
 from my_panda_free_space_1goal import myPandaFreeSpace1Goal
 from my_panda_IK_wrapper_3d import myPandaIKWrapper3D
 import my_panda_free_space_traj
-from stable_baselines import A2C, ACKTR
+from stable_baselines import A2C, ACKTR, PPO2
 from stable_baselines.bench import Monitor
 from stable_baselines.results_plotter import load_results, ts2xy
 from stable_baselines.common.vec_env import DummyVecEnv
@@ -95,9 +95,11 @@ if __name__ == "__main__":
     #         raise StringException(grav_option + "is not a valid gravity option." + "\nValid options:\n" + str(grav_options))
     ACKTR_kwargs = {'gamma':0.99, 'n_steps':32, 'ent_coef':0.001, 'vf_coef':0.75, 'vf_fisher_coef':1.0, 'learning_rate':0.05, 'max_grad_norm':0.5, 'kfac_clip':0.001, 'lr_schedule':'constant', 'kfac_update':1}
     A2C_kwargs = {'gamma':0.99, 'n_steps':32, 'ent_coef':0.001, 'vf_coef':0.25, 'learning_rate':0.0007, 'max_grad_norm':0.5, 'lr_schedule':'constant', 'alpha':0.99, 'epsilon':1e-5}
+    PPO2_kwargs = {'gamma':0.99, 'n_steps':32, 'ent_coef':0.01, 'vf_coef':0.5, 'learning_rate':0.0007, 'max_grad_norm':0.5, 'lam':0.95, 'nminibatches':4, 'noptepochs':4, 'cliprange':0.2, 'cliprange_vf':None}
 
-    AGENTS_MAP = {"A2C": A2C, "ACKTR": ACKTR}
-    kwargs_map = {"A2C": A2C_kwargs, "ACKTR": ACKTR_kwargs}
+    AGENTS_MAP = {"A2C": A2C, "ACKTR": ACKTR, "PPO2": PPO2}
+    kwargs_map = {"A2C": A2C_kwargs, "ACKTR": ACKTR_kwargs, "PPO2": PPO2_kwargs}
+
 
     parser = argparse.ArgumentParser("Train an RL Agent")
     parser.add_argument("-rn", "--run_name", required=True)
@@ -111,7 +113,7 @@ if __name__ == "__main__":
     # parser.add_argument("-vf_coef", type=float, required=False, default=kwargs["vf_coef"])
     # parser.add_argument("-ent_coef", type=float, required=False, default=kwargs["ent_coef"])
     # parser.add_argument("-n_steps", type=int, required=False, default=kwargs["n_steps"])
-    parser.add_argument("-agent", type=str, required=True, choices=["A2C", "ACKTR"])
+    parser.add_argument("-agent", type=str, required=True, choices=AGENTS_MAP.keys())
     args = parser.parse_args()
     rendering = args.rendering
     total_timesteps = args.timesteps
@@ -140,6 +142,7 @@ if __name__ == "__main__":
     hyperparamfile.write(str(kwargs))
     hyperparamfile.write("\nn_envs = {}\n".format(args.n_envs))
     hyperparamfile.write("RLAgent = {}\n".format(RLAgent))
+    hyperparamfile.write("Env = {}\n".format(args.env))
     hyperparamfile.close()
     model = RLAgent('MlpPolicy', env, verbose=1, **kwargs).learn(total_timesteps=total_timesteps, callback=callback)
     model.save(log_dir + "final_agent.pkl")

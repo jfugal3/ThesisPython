@@ -2,7 +2,7 @@ import warnings
 warnings.simplefilter("ignore")
 from my_panda_free_space_1goal import myPandaFreeSpace1Goal
 import my_panda_free_space_traj
-from stable_baselines import A2C, ACKTR
+from stable_baselines import PPO2, ACKTR
 from stable_baselines.bench import Monitor
 from stable_baselines.results_plotter import load_results, ts2xy
 import stable_baselines.common.cmd_util
@@ -67,13 +67,56 @@ if __name__ == "__main__":
     # timesteps = args.ts
 
     ##################################################################################################################################################################################################
-    top_log_dir = "perfect_comp_100_training_sessions"
-    hyperparams = {'ent_coef': 0.001, 'vf_fisher_coef': 1.0, 'n_steps': 32, 'kfac_clip': 0.001, 'max_grad_norm': 0.5, 'lr_schedule': 'constant', 'gamma': 0.99, 'learning_rate': 0.05, 'vf_coef': 0.75}
-    env_name = "1goal_perfect_comp"
+    # top_log_dir = "ACKTR_no_comp_100_training_sessions_double_ts"
+    # hyperparams = {'ent_coef': 0.001, 'vf_fisher_coef': 1.0, 'n_steps': 32, 'kfac_clip': 0.001, 'max_grad_norm': 0.5, 'lr_schedule': 'constant', 'gamma': 0.99, 'learning_rate': 0.12, 'vf_coef': 1.0}
+    # env_name = "1goal_no_comp"
+    # RLAgent = ACKTR
+    # timesteps = 500000
+    ##################################################################################################################################################################################################
+    ##################################################################################################################################################################################################
+    # top_log_dir = "ACKTR_perfect_comp_100_training_sessions_double_ts"
+    # hyperparams = {'ent_coef': 0.001, 'vf_fisher_coef': 1.0, 'n_steps': 32, 'kfac_clip': 0.001, 'max_grad_norm': 0.5, 'lr_schedule': 'constant', 'gamma': 0.99, 'learning_rate': 0.05, 'vf_coef': 0.75}
+    # env_name = "1goal_perfect_comp"
+    # RLAgent = ACKTR
+    # timesteps = 500000
+    ##################################################################################################################################################################################################
+    ##################################################################################################################################################################################################
+    #    ,cliprange,cliprange_vf,ent_coef,gamma,lam,learning_rate,max_grad_norm,n_steps,nminibatches,noptepochs,vf_coef,    mean AUC, STD
+    # 1,  0.2,      0.2,         0.0,     0.99, 0.95,0.00072,     0.5,          32,     4,           4          ,0.75,      37549.25,16930.61,
+    # top_log_dir = "PPO2_no_comp_100_training_sessions"
+    # hyperparams = {'cliprange': 0.2, 'cliprange_vf': 0.2, 'ent_coef': 0.0, 'gamma': 0.99, 'lam': 0.95, 'learning_rate': 0.00072, 'max_grad_norm': 0.5, 'n_steps': 32, 'nminibatches': 4, 'noptepochs': 4, 'vf_coef': 0.75}
+    # env_name = "1goal_no_comp"
+    # RLAgent = PPO2
+    # timesteps = 250000
+    ##################################################################################################################################################################################################
+    ##################################################################################################################################################################################################
+       # ,  cliprange, cliprange_vf, ent_coef, gamma, lam,  learning_rate, max_grad_norm, n_steps, nminibatches, noptepochs, vf_coef,    mean AUC, STD
+       # 1, 0.2,       0.2,          0.0,      0.99,  0.95, 0.001,         0.5,           32,      4,            4,          0.25,       46533.51, 17899.28,
+    # top_log_dir = "PPO2_perfect_comp_100_training_sessions"
+    # hyperparams = {'cliprange': 0.2, 'cliprange_vf': 0.2, 'ent_coef': 0.0, 'gamma': 0.99, 'lam': 0.95, 'learning_rate': 0.001, 'max_grad_norm': 0.5, 'n_steps': 32, 'nminibatches': 4, 'noptepochs': 4, 'vf_coef': 0.25}
+    # env_name = "1goal_perfect_comp"
+    # RLAgent = PPO2
+    # timesteps = 250000
+    ##################################################################################################################################################################################################
+    ##################################################################################################################################################################################################
+     #  ,  cliprange, cliprange_vf, ent_coef, gamma, lam,  learning_rate, max_grad_norm, n_steps, nminibatches, noptepochs, vf_coef,    mean AUC, STD,      mfer,     STD
+     # 1,  0.2,       0.2,          0.001,      0.99,  0.95, 0.00072,       0.5,           32,      4,            4,          1.0,       27936.02, 18106.92, 52273.21, 16109.45
+    top_log_dir = "PPO2_no_comp_100_training_sessions"
+    hyperparams = {'cliprange': 0.2, 'cliprange_vf': 0.2, 'ent_coef': 0.001, 'gamma': 0.99, 'lam': 0.95, 'learning_rate': 0.00072, 'max_grad_norm': 0.5, 'n_steps': 32, 'nminibatches': 4, 'noptepochs': 4, 'vf_coef': 1.0}
+    env_name = "1goal_no_comp"
+    RLAgent = PPO2
+    timesteps = 200000
+    ##################################################################################################################################################################################################
+    ##################################################################################################################################################################################################
+    # ,  cliprange, cliprange_vf, ent_coef, gamma, lam,  learning_rate, max_grad_norm, n_steps, nminibatches, noptepochs, vf_coef,    mean AUC, STD,      mfer,      STD
+    # 1,  0.2,       0.2,          0.0,      0.99,  0.95, 0.00037,       0.5,           32,      4,            4,          1.0,        40922.42, 19505.85, 61147.62, 1169.37
+    # top_log_dir = "PPO2_perfect_comp_100_training_sessions_fer_test1"
+    # hyperparams = {'cliprange': 0.2, 'cliprange_vf': None, 'ent_coef': 0.0, 'gamma': 0.99, 'lam': 0.95, 'learning_rate': 0.00037, 'max_grad_norm': 0.5, 'n_steps': 32, 'nminibatches': 4, 'noptepochs': 4, 'vf_coef': 1.0}
+    # env_name = "1goal_perfect_comp"
+    # RLAgent = PPO2
+    # timesteps = 250000
     ##################################################################################################################################################################################################
     n_envs = 4
-    timesteps = 250000
-    RLAgent = ACKTR
 
     start_time = datetime.now()
 

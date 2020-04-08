@@ -2,7 +2,7 @@ import warnings
 warnings.simplefilter("ignore")
 from my_panda_free_space_1goal import myPandaFreeSpace1Goal
 import my_panda_free_space_traj
-from stable_baselines import A2C, ACKTR
+from stable_baselines import PPO2, ACKTR
 from stable_baselines.bench import Monitor
 from stable_baselines.results_plotter import load_results, ts2xy
 import stable_baselines.common.cmd_util
@@ -56,16 +56,18 @@ if __name__ == "__main__":
     parser.add_argument("-ld", "--log_dir", required=True)
     parser.add_argument("-hd", "--hyperparamfile", required=True)
     parser.add_argument("-env", required=True, choices=['1goal_no_comp', '1goal_perfect_comp'])
-    parser.add_argument("-n_envs", type=int, required=False, default=1)
+    parser.add_argument("-n_envs", type=int, required=False, default=4)
     parser.add_argument("-ts", type=int, required=True)
+    parser.add_argument("-agent", required=True, choices=['ACKTR', "PPO2"])
     args = parser.parse_args()
+    AGENTS_MAP = {'ACKTR': ACKTR, 'PPO2':PPO2}
 
     top_log_dir = args.log_dir
     hyperparams_list = np.load(args.hyperparamfile, allow_pickle=True)
     env_name = args.env
     n_envs = args.n_envs
     timesteps = args.ts
-    RLAgent = ACKTR
+    RLAgent = AGENTS_MAP[args.agent]
 
     start_time = datetime.now()
 
@@ -77,7 +79,7 @@ if __name__ == "__main__":
         os.makedirs(hyperparam_log_dir, exist_ok=True)
         print("Beginning test", test_num, "of", len(hyperparams_list))
         begin_perm_time = datetime.now()
-        for i in range(5):
+        for i in range(5,10):
             run_dir = os.path.join(hyperparam_log_dir, "run_" + str(i) + "_monitor_dir")
             hyperparamfilename = os.path.join(run_dir, "hyperparams.txt")
             if os.path.exists(hyperparamfilename):
@@ -97,6 +99,7 @@ if __name__ == "__main__":
             hyperparamfile.write(str(hyperparams))
             hyperparamfile.write("\nn_envs = {}\n".format(n_envs))
             hyperparamfile.write("RLAgent = {}\n".format(RLAgent))
+            hyperparamfile.write("Env = {}\n".format(args.env))
             hyperparamfile.close()
         print("time remaining:", (datetime.now() - begin_perm_time) * (len(hyperparams_list) - test_num))
         test_num += 1

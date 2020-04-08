@@ -1,0 +1,1 @@
+Logging to training_logs/PPO2_perfect_grav_comp_grid_search/cliprange-0.2__cliprange_vf-0.2__ent_coef-0.01__gamma-0.99__lam-0.95__learning_rate-0.00037__max_grad_norm-0.5__n_steps-32__nminibatches-4__noptepochs-4__vf_coef-0.75/run_4_monitor_dir
