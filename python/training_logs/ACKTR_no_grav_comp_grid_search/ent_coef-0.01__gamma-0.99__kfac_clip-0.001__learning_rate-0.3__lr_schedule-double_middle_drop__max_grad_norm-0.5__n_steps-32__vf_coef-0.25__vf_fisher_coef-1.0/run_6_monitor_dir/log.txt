@@ -1,0 +1,1 @@
+Logging to training_logs/ACKTR_no_grav_comp_grid_search/ent_coef-0.01__gamma-0.99__kfac_clip-0.001__learning_rate-0.3__lr_schedule-double_middle_drop__max_grad_norm-0.5__n_steps-32__vf_coef-0.25__vf_fisher_coef-1.0/run_6_monitor_dir
