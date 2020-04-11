@@ -1,0 +1,4 @@
+{'learning_rate': 0.02, 'ent_coef': 0.01, 'lr_schedule': 'double_middle_drop', 'kfac_clip': 0.001, 'n_steps': 32, 'vf_fisher_coef': 1.0, 'max_grad_norm': 0.5, 'gamma': 0.99, 'vf_coef': 0.5}
+n_envs = 4
+RLAgent = <class 'stable_baselines.acktr.acktr.ACKTR'>
+Env = 1goal_perfect_comp
