@@ -828,7 +828,7 @@ def test_init_pos():
     # env = my_panda_free_space_1goal.myPandaFreeSpace1Goal(has_renderer=True, grav_option=grav_options['perfect_comp'],
     #                                                         randomize_initialization_std_dev=randomize_initialization_std_dev,
     #                                                         init_qpos=init_qpos, target_xyz=[0.3, 0.3, 1.5])
-    env = create_one_env('1goal_no_comp', has_renderer=True)
+    env = create_one_env('1goal_no_comp_3', has_renderer=True)
     # print(env.randomize_initialization)
     # env.mujoco_robot._init_qpos = np.array(
     #     [np.pi/4, np.pi / 16.0, 0.00, -np.pi / 2.0 - np.pi / 3.0, 0.00, np.pi - 0.2, np.pi / 4])
