@@ -1,0 +1,5 @@
+{'lam': 0.95, 'max_grad_norm': 0.5, 'vf_coef': 0.25, 'gamma': 0.99, 'cliprange_vf': 0.2, 'learning_rate': 0.001, 'n_steps': 32, 'nminibatches': 4, 'ent_coef': 0.0, 'cliprange': 0.2, 'noptepochs': 4}
+n_envs = 4
+
+env = 1goal_perfect_comp_3
+RLAgent = <class 'stable_baselines.ppo2.ppo2.PPO2'>

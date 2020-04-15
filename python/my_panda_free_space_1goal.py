@@ -16,12 +16,14 @@ class mySpec:
 superclass = PandaFreeSpaceTraj
 class myPandaFreeSpace1Goal(superclass, gym.Env):
     metadata = {'render.modes': ['human']}
-    def __init__(self, grav_option, has_renderer=False, target_xyz=[0.6, -0.2, 1.4]):
+    def __init__(self, grav_option, has_renderer=False, target_xyz=[0.6, -0.2, 1.4], randomize_initialization_std_dev=None, init_qpos=None):
         gym.Env.__init__(self)
         self.grav_option = grav_option
         self.num_via_points = 1
         self.via_points = np.array([[0] + target_xyz])
-        superclass.__init__(self, has_renderer=has_renderer, has_offscreen_renderer=False, use_camera_obs=False)
+        superclass.__init__(self, has_renderer=has_renderer, has_offscreen_renderer=False, use_camera_obs=False,
+                            randomize_initialization_std_dev=randomize_initialization_std_dev,
+                            init_qpos=init_qpos)
         # self.spec = mySpec()
         # self.viewer.set_camera(camera_id=0)
         self.has_renderer = has_renderer

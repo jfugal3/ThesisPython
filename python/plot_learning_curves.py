@@ -73,7 +73,7 @@ def compare_results(log_folders, names, title="Learning Curves", colors=["b", "g
     plt.title(title)
     plt.show()
 
-def mean_var_plots(log_folders, names, title="Learning Curves", colors=["b", "g", "r", "c", "m", "y", "k"]):
+def mean_var_plots(log_folders, names, title="Learning Curves", colors=["b", "g", "r", "c", "m", "y", "k"], scatter=False):
     fig = plt.figure()
     if len(log_folders) > 7 and len(log_folders) > len(colors):
         print(log_folders)
@@ -89,22 +89,24 @@ def mean_var_plots(log_folders, names, title="Learning Curves", colors=["b", "g"
             if directory_name.endswith("monitor_dir"):
                 x, y = ts2xy(load_results(os.path.join(log_folders[i], directory_name)), 'timesteps')
                 y_mat.append(y)
-                # if i != change:
-                #     plt.plot(x,y,color=colors[i], marker='.', ms=2, ls='', alpha=0.2, label=names[i])
-                # else:
-                #     plt.plot(x,y,color=colors[i], marker='.', ms=2, ls='', alpha=0.2)
-                # change = i
+                if scatter:
+                    if i != change:
+                        plt.plot(x,y,color=colors[i], marker='.', ms=2, ls='', alpha=0.2, label=names[i])
+                    else:
+                        plt.plot(x,y,color=colors[i], marker='.', ms=2, ls='', alpha=0.2)
+                    change = i
 
         assert len(y_mat) != 0, "found no directories ending in 'monitor_dir' in " + log_folders[i]
-        y_mat = np.vstack(y_mat)
-        mean = np.mean(y_mat, axis=0)
-        std = np.std(y_mat, axis=0)
-        plt.plot(x, mean, color=colors[i], ls="-", label=names[i])
-        plt.fill_between(x, mean + std/2, mean - std/2, color=colors[i], alpha=0.3)
+        if not scatter:
+            y_mat = np.vstack(y_mat)
+            mean = np.mean(y_mat, axis=0)
+            std = np.std(y_mat, axis=0)
+            plt.plot(x, mean, color=colors[i], ls="-", label=names[i])
+            plt.fill_between(x, mean + std/2, mean - std/2, color=colors[i], alpha=0.3)
     plt.legend(loc='upper left')
     plt.ticklabel_format(style='sci', axis='both', scilimits=(0,0))
     plt.xlabel('Number of Timesteps')
-    plt.xlim([0,500000])
+    plt.xlim([0,200000])
     plt.ylabel('Rewards')
     plt.title(title)
     plt.show()
@@ -178,7 +180,7 @@ def grid_analysis(log_dirs, names, sess_100_dirs=None, sess_names=None, colors=[
             f.write(str(i) + ",")
             for key_val in hyperparams.split("__"):
                 f.write(str(key_val.split("-")[1]) + ",")
-            f.write(str(np.around(y_sort[i-1],2)) + "," + str(np.around(e_sort[i-1] * 2, 2)) + "," + str(np.around(tr_sort[i-1], 2)) + "," + str(np.around(td_sort[i-1],2)))
+            f.write(str(np.around(y_sort[i-1])) + "," + str(np.around(e_sort[i-1] * 2)) + "," + str(np.around(tr_sort[i-1])) + "," + str(np.around(td_sort[i-1])))
             f.write("\n")
             i += 1
         f.close()
@@ -272,12 +274,14 @@ if __name__ == "__main__":
     parser.add_argument("-sess_100_dirs", nargs="+", help="dirs for grid_analysis", required=False, default=None)
     parser.add_argument("-sess_names", nargs="+", help="names for sess_100_dirs", required=False, default=None)
     parser.add_argument("-path", help="add path to log dirs", required=False, default="training_logs")
+    parser.add_argument("-scatter", type=bool, required=False, default=False)
     args = parser.parse_args()
 
     log_dirs = args.log_dirs
     names = args.run_names
     colors = args.colors
     title = args.title.replace('_', ' ')
+    print(args.scatter)
     if colors[0] == "default":
         # if len(names) > 7:
         colors = list(mcolors.TABLEAU_COLORS)[:len(names)]
@@ -294,7 +298,7 @@ if __name__ == "__main__":
             log_dirs[i] = os.path.join(top_dir, log_dirs[i])
             names[i] = names[i].replace('_', ' ')
         if args.mean_var is not None:
-            mean_var_plots(log_folders=log_dirs, names=names, title=title, colors=colors)
+            mean_var_plots(log_folders=log_dirs, names=names, title=title, colors=colors, scatter=args.scatter)
         elif args.grid_analysis is not None:
             if args.sess_100_dirs is not None:
                 for i in range(len(args.sess_100_dirs)):

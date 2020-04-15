@@ -16,8 +16,11 @@ import my_panda_free_space_1goal
 import gym
 from my_panda_IK_wrapper_3d import myPandaIKWrapper3D
 from my_panda_lift import myPandaLift
-from optimize_hyperparams import create_env
-from optimize_hyperparams import ENVS
+# from optimize_hyperparams import create_env
+# from optimize_hyperparams import ENVS
+from env_creator import create_env
+from env_creator import ENVS
+from env_creator import create_one_env
 
 def test_generatePatternVel():
     gen = randVelGen.RandVelGenerator()
@@ -818,6 +821,30 @@ def test_home_position():
         # action = helperFun.normalize_sym(action, env.action_low, env.action_high)
         env.render()
 
+
+def test_init_pos():
+    randomize_initialization_std_dev = 0.05
+    # init_qpos = np.array([-np.pi/4, np.pi / 16.0, 0.00, -np.pi / 2.0 -np.pi/6, 0.00, np.pi - 0.2, np.pi / 4])
+    # env = my_panda_free_space_1goal.myPandaFreeSpace1Goal(has_renderer=True, grav_option=grav_options['perfect_comp'],
+    #                                                         randomize_initialization_std_dev=randomize_initialization_std_dev,
+    #                                                         init_qpos=init_qpos, target_xyz=[0.3, 0.3, 1.5])
+    env = create_one_env('1goal_no_comp', has_renderer=True)
+    # print(env.randomize_initialization)
+    # env.mujoco_robot._init_qpos = np.array(
+    #     [np.pi/4, np.pi / 16.0, 0.00, -np.pi / 2.0 - np.pi / 3.0, 0.00, np.pi - 0.2, np.pi / 4])
+    print(env.mujoco_robot._init_qpos)
+    print(env.mujoco_robot.init_qpos)
+    for _ in range(2):
+        env.reset()
+
+        for i in range(10000):
+            obs = env.unpack_obs()
+            obs = helperFun.unnormalize(obs, env.obs_low, env.obs_high)
+            q, qd = obs[:7], obs[7:]
+            action2 = controllers.PDControl(q=q, qd=qd, qgoal=env.mujoco_robot.init_qpos)
+            action2 = helperFun.normalize_sym(action2, env.action_low, env.action_high)
+            env.render()
+
 TEST_MAP = {
 'test_generatePatternVel' : test_generatePatternVel,
 'test_getBoundViolations' : test_getBoundViolations,
@@ -845,7 +872,8 @@ TEST_MAP = {
 'test_normalize_unnormalize_sym' : test_normalize_unnormalize_sym,
 'test_my_panda_lift' : test_my_panda_lift,
 'test_create_env_1goal_ee_PD_cont': test_create_env_1goal_ee_PD_cont,
-'test_home_position': test_home_position
+'test_home_position': test_home_position,
+'test_init_pos' : test_init_pos
 }
 
 

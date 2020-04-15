@@ -1,0 +1,1 @@
+Logging to training_logs/PPO2_no_comp_100_training_sessions_2/run_28_monitor_dir
