@@ -823,7 +823,7 @@ def test_home_position():
 
 
 def test_init_pos():
-    randomize_initialization_std_dev = 0.05
+    # randomize_initialization_std_dev = 0.05
     # init_qpos = np.array([-np.pi/4, np.pi / 16.0, 0.00, -np.pi / 2.0 -np.pi/6, 0.00, np.pi - 0.2, np.pi / 4])
     # env = my_panda_free_space_1goal.myPandaFreeSpace1Goal(has_renderer=True, grav_option=grav_options['perfect_comp'],
     #                                                         randomize_initialization_std_dev=randomize_initialization_std_dev,
@@ -844,6 +844,31 @@ def test_init_pos():
             action2 = controllers.PDControl(q=q, qd=qd, qgoal=env.mujoco_robot.init_qpos)
             action2 = helperFun.normalize_sym(action2, env.action_low, env.action_high)
             env.render()
+
+def test_init_pos_var():
+    env_name = '1goal_no_comp_2'
+    env = create_one_env(env_name)
+    x_pos = []
+    for i in range(1000):
+
+        q_pos = helperFun.unnormalize(env.reset()[:7], env.obs_low[:7], env.obs_high[:7])
+        ee_pos = np.array(env.sim.data.body_xpos[env.sim.model.body_name2id('right_hand')])
+        x_pos.append(ee_pos)
+        if np.any(q_pos < env.obs_low[:7]):
+            print(i + 1)
+            print("q_pos:", q_pos)
+            print("bound_low:", env.obs_low[:7])
+
+        if np.any(q_pos > env.obs_high[:7]):
+            print(i + 1)
+            print("q_pos:", q_pos)
+            print("bound_high:", env.obs_high[:7])
+
+        # print(ee_pos)
+    x_mat = np.vstack(x_pos)
+    print(env_name)
+    print("variance:", np.var(x_mat,0))
+    print("mean:", np.mean(x_mat,0))
 
 TEST_MAP = {
 'test_generatePatternVel' : test_generatePatternVel,
@@ -873,7 +898,8 @@ TEST_MAP = {
 'test_my_panda_lift' : test_my_panda_lift,
 'test_create_env_1goal_ee_PD_cont': test_create_env_1goal_ee_PD_cont,
 'test_home_position': test_home_position,
-'test_init_pos' : test_init_pos
+'test_init_pos' : test_init_pos,
+'test_init_pos_var' : test_init_pos_var
 }
 
 

@@ -104,4 +104,11 @@ if __name__ == "__main__":
             plt.xlabel('Normalized Joint Angle')
         if i in [0,4]:
             plt.ylabel('Density')
+    task_num = 1
+    if args.env.endswith('2'):
+        task_num = 2
+    if args.env.endswith('3'):
+        task_num = 3
+    # plt.figure(1)
+    # plt.title('{} {} Normalized Joint Torque Histogram'.format({'PPO2': PPO2, 'ACKTR': ACKTR}[args.agent], task_num))
     plt.show()
