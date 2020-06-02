@@ -40,6 +40,8 @@ class PandaFreeSpaceTraj(PandaEnv):
             use_default_controller_config=True,
             controller_config_file=None,
             controller='joint_velocity',
+            randomize_initialization_std_dev=None,
+            init_qpos=None,
             **kwargs
     ):
 
@@ -148,6 +150,17 @@ class PandaFreeSpaceTraj(PandaEnv):
         self.finished_time = None
         self.use_object_obs = use_object_obs
 
+        if randomize_initialization_std_dev is None:
+            self.randomize_initialization_std_dev = 0.02
+        else:
+            self.randomize_initialization_std_dev = randomize_initialization_std_dev
+
+        if init_qpos is None:
+            self.init_qpos = np.array(
+                [0, np.pi / 16.0, 0.00, -np.pi / 2.0 - np.pi / 3.0, 0.00, np.pi - 0.2, np.pi / 4])
+        else:
+            self.init_qpos = init_qpos
+
         super().__init__(
             # logging_filename=task['logging_filename'],
             # only_cartesian_obs=task['only_cartesian_obs'],
@@ -254,8 +267,7 @@ class PandaFreeSpaceTraj(PandaEnv):
         self.robot_contact_geoms = self.mujoco_robot.contact_geoms
 
         # ensure both robots start at similar positions:
-        self.mujoco_robot._init_qpos = np.array(
-            [0, np.pi / 16.0, 0.00, -np.pi / 2.0 - np.pi / 3.0, 0.00, np.pi - 0.2, np.pi / 4])
+        self.mujoco_robot._init_qpos = self.init_qpos
 
 
         # load model for workspace
@@ -291,7 +303,7 @@ class PandaFreeSpaceTraj(PandaEnv):
         # reset joint positions
         if self.randomize_initialization:
             self.sim.data.qpos[self._ref_joint_pos_indexes] = np.array(
-                self.mujoco_robot.init_qpos + np.random.randn(7) * 0.02)
+                self.mujoco_robot.init_qpos + np.random.randn(7) * self.randomize_initialization_std_dev)
         else:
             self.sim.data.qpos[self._ref_joint_pos_indexes] = np.array(self.mujoco_robot.init_qpos)
 

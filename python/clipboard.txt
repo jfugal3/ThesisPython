@@ -17,3 +17,5 @@ python train_agent.py -rn A2C_lr_range_search/no_comp/lr_0.01 -agent A2C -lr 0.0
 python train_agent.py -rn PPO2_lr_range_search/perfect_comp/lr_0.005 -agent PPO2 -lr 0.005 -env 1goal_perfect_comp
 
 python grid_search.py -ld PPO2_perfect_grav_comp_grid_search -env 1goal_perfect_comp -agent PPO2 -ts 250000 -hd hyperparamlists_PPO2/list_1.npy
+
+scavanger && scavenger

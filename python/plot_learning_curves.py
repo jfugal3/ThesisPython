@@ -106,7 +106,7 @@ def mean_var_plots(log_folders, names, title="Learning Curves", colors=["b", "g"
     plt.legend(loc='upper left')
     plt.ticklabel_format(style='sci', axis='both', scilimits=(0,0))
     plt.xlabel('Number of Timesteps')
-    plt.xlim([0,500000])
+    plt.xlim([0,1000000])
     plt.ylabel('Rewards')
     plt.title(title)
     plt.show()

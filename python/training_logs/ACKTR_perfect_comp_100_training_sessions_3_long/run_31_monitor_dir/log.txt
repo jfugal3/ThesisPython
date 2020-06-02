@@ -1,0 +1,1 @@
+Logging to training_logs/ACKTR_perfect_comp_100_training_sessions_3_long/run_31_monitor_dir

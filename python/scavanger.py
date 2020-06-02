@@ -173,20 +173,20 @@ if __name__ == "__main__":
     ##################################################################################################################################################################################################
     # ent_coef, gamma, kfac_clip, learning_rate, lr_schedule, max_grad_norm, n_steps, vf_coef, vf_fisher_coef, mean_auc, std_auc,  mean_fer, std_fer
     # 0,        0.99,  0.001,     0.12,          linear,      0.5,           32,      0.75,    1,              44063.24, 13486.46, 23035.33, 8996.51
-    # top_log_dir = "ACKTR_no_comp_100_training_sessions_3"
+    # top_log_dir = "ACKTR_no_comp_100_training_sessions_3_long"
     # hyperparams = {'ent_coef': 0.0, 'vf_fisher_coef': 1.0, 'n_steps': 32, 'kfac_clip': 0.001, 'max_grad_norm': 0.5, 'lr_schedule': 'linear', 'gamma': 0.99, 'learning_rate': 0.12, 'vf_coef': 0.75}
     # env_name = "1goal_no_comp_3"
     # RLAgent = ACKTR
-    # timesteps = 500000
+    # timesteps = 1000000
     ##################################################################################################################################################################################################
     ##################################################################################################################################################################################################
     # ent_coef, gamma, kfac_clip, learning_rate, lr_schedule, max_grad_norm	n_steps	vf_coef	vf_fisher_coef, mean_auc, std_auc,  mean_fer, std_fer
     # 0.001,    0.99,  0.001,     0.05,          constant,    0.5,          32,     1,      1,              37132.02, 18115.62, 10458.76, 7682.01
-    top_log_dir = "ACKTR_perfect_comp_100_training_sessions_3"
+    top_log_dir = "ACKTR_perfect_comp_100_training_sessions_3_long"
     hyperparams = {'ent_coef': 0.001, 'vf_fisher_coef': 1.0, 'n_steps': 32, 'kfac_clip': 0.001, 'max_grad_norm': 0.5, 'lr_schedule': 'constant', 'gamma': 0.99, 'learning_rate': 0.05, 'vf_coef': 1.0}
     env_name = "1goal_perfect_comp_3"
     RLAgent = ACKTR
-    timesteps = 500000
+    timesteps = 1000000
     ##################################################################################################################################################################################################
 
 
